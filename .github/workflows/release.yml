@@ -1,0 +1,39 @@
+name: Release
+on:
+  release:
+    types: [published]
+
+jobs:
+  release:
+    name: Release Plugin
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install SourceMod
+        uses: KatsuteTF/Workflows/actions/setup-sourcepawn@main
+
+      - name: Install RRM
+        uses: KatsuteTF/Workflows/actions/curl@main
+        with:
+          url: https://raw.githubusercontent.com/KatsuteTF/RRM/main/addons/sourcemod/include/rrm.inc
+          file: rrm.inc
+
+      - name: Compile Plugin
+        run: |
+          spcomp -i ./ rrm_bleed.sp
+          spcomp -i ./ rrm_explode.sp
+          spcomp -i ./ rrm_fire.sp
+          spcomp -i ./ rrm_jarate.sp
+          spcomp -i ./ rrm_marked.sp
+          spcomp -i ./ rrm_medieval.sp
+          spcomp -i ./ rrm_milked.sp
+          spcomp -i ./ rrm_stun.sp
+          spcomp -i ./ rrm_taunt.sp
+
+      - name: Deploy to GitHub Releases
+        uses: AButler/upload-release-assets@v2.0.2
+        with:
+          files: "*.smx"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
