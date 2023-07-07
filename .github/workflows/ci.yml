@@ -12,6 +12,12 @@ jobs:
       - name: Install SourceMod
         uses: KatsuteTF/Workflows/actions/setup-sourcepawn@main
 
+      - name: Install TF2Attributes
+        uses: KatsuteTF/Workflows/actions/curl@main
+        with:
+          url: https://raw.githubusercontent.com/FlaminSarge/tf2attributes/master/scripting/include/tf2attributes.inc
+          file: addons/sourcemod/include/tf2attributes.inc
+
       - name: Install RRM
         uses: KatsuteTF/Workflows/actions/curl@main
         with:
