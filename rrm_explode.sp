@@ -71,8 +71,6 @@ public void OnConvarChanged(Handle convar, char[] oldValue, char[] newValue)
         gMin = fNewValue;
     else if(convar == cMax)
         gMax = fNewValue;
-    else if(convar == cDuration)
-        gDuration = fNewValue;
 }
 
 public void OnClientPostAdminCheck(int client)
