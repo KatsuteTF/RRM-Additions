@@ -32,6 +32,6 @@ jobs:
           spcomp -i ./ rrm_jarate.sp
           spcomp -i ./ rrm_marked.sp
           spcomp -i ./ rrm_medieval.sp
-          spcomp -i ./ rrm_milked.sp
+          spcomp -i ./ rrm_milk.sp
           spcomp -i ./ rrm_stun.sp
           spcomp -i ./ rrm_taunt.sp
