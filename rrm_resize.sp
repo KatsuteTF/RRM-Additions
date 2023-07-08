@@ -37,6 +37,8 @@ public void OnPluginStart()
 	gMin = cMin.FloatValue;
 	gMax = cMax.FloatValue;
 
+    HookEvent("player_spawn", OnPlayerSpawn, EventHookMode_Post);
+
 	if(RRM_IsRegOpen())
 		RegisterModifiers();
 
@@ -71,12 +73,20 @@ public void OnConvarChanged(Handle convar, char[] oldValue, char[] newValue)
 		gMax = fNewValue;
 }
 
+public Action OnPlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
+{
+	if(!gEnabled)
+		return Plugin_Continue;
+	int i = GetClientOfUserId(GetEventInt(event, "userid"));
+	SetEntPropFloat(i, Prop_Send, "m_flModelScale", gSize);
+	return Plugin_Continue;
+}
+
 public void OnClientPostAdminCheck(int i)
 {
 	if(!gEnabled)
 		return;
     SetEntPropFloat(i, Prop_Send, "m_flModelScale", gSize);
-    SetEntPropFloat(i, Prop_Send, "m_flStepSize", 18.0 * gSize);
 }
 
 public int RRM_Callback_Size(bool enable, float value)
@@ -99,7 +109,6 @@ void SetSize()
 		if(!IsClientInGame(i))
 			continue;
         SetEntPropFloat(i, Prop_Send, "m_flModelScale", gSize);
-        SetEntPropFloat(i, Prop_Send, "m_flStepSize", 18.0 * gSize);
 	}
 }
 
@@ -110,6 +119,5 @@ void RemoveSize()
 		if(!IsClientInGame(i))
 			continue;
         SetEntPropFloat(i, Prop_Send, "m_flModelScale", 1.0);
-        SetEntPropFloat(i, Prop_Send, "m_flStepSize", 18.0);
 	}
 }

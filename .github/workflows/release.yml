@@ -32,7 +32,6 @@ jobs:
           spcomp -i ./ rrm_charge.sp
           spcomp -i ./ rrm_explode.sp
           spcomp -i ./ rrm_fire.sp
-          spcomp -i ./ rrm_gas.sp
           spcomp -i ./ rrm_jarate.sp
           spcomp -i ./ rrm_marked.sp
           spcomp -i ./ rrm_medieval.sp
