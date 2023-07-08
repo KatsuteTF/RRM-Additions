@@ -27,8 +27,8 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 |`rrm_milk_min`|`0.1`|Min mad milk chance|
 |`rrm_milk_max`|`1.0`|Max mad milk chance|
 |`rrm_milk_duration`|`3.0`|Mad milk duration|
-|`rrm_size_min`|`0.1`|Min size|
-|`rrm_size_max`|`1.0`|Max size|
+|`rrm_size_min`|`0.25`|Min size|
+|`rrm_size_max`|`1.35`|Max size|
 |`rrm_stun_min`|`0.1`|Min stun chance|
 |`rrm_stun_max`|`1.0`|Max stun chance|
 |`rrm_stun_duration`|`3.0`|Stun duration|
