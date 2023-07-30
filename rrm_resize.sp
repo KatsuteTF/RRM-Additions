@@ -20,7 +20,7 @@ float gMin = 0.0, gMax = 0.0;
 
 public Plugin myinfo =
 {
-	name = "[RRM] Size Modifier",
+    name = "[RRM] Size Modifier",
     author = "Katsute",
     description = "Modifier that resizes players.",
     version = "1.0"
@@ -28,96 +28,96 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
-	cMin = CreateConVar("rrm_size_min", "0.25", "Minimum value for the random number generator.");
-	cMax = CreateConVar("rrm_size_max", "1.35", "Maximum value for the random number generator.");
+    cMin = CreateConVar("rrm_size_min", "0.25", "Minimum value for the random number generator.");
+    cMax = CreateConVar("rrm_size_max", "1.35", "Maximum value for the random number generator.");
 
-	cMin.AddChangeHook(OnConvarChanged);
-	cMax.AddChangeHook(OnConvarChanged);
+    cMin.AddChangeHook(OnConvarChanged);
+    cMax.AddChangeHook(OnConvarChanged);
 
-	gMin = cMin.FloatValue;
-	gMax = cMax.FloatValue;
+    gMin = cMin.FloatValue;
+    gMax = cMax.FloatValue;
 
     HookEvent("player_spawn", OnPlayerSpawn, EventHookMode_Post);
 
-	if(RRM_IsRegOpen())
-		RegisterModifiers();
+    if(RRM_IsRegOpen())
+        RegisterModifiers();
 
-	AutoExecConfig(true, "rrm_size", "rrm");
+    AutoExecConfig(true, "rrm_size", "rrm");
 }
 
 public void OnPluginEnd()
 {
-	RemoveSize();
+    RemoveSize();
 }
 
 public int RRM_OnRegOpen()
 {
-	RegisterModifiers();
+    RegisterModifiers();
 }
 
 void RegisterModifiers()
 {
-	RRM_Register("Resize", gMin, gMax, false, RRM_Callback_Size);
+    RRM_Register("Resize", gMin, gMax, false, RRM_Callback_Size);
 }
 
 public void OnConvarChanged(Handle convar, char[] oldValue, char[] newValue)
 {
-	if (StrEqual(oldValue, newValue, true))
-		return;
+    if (StrEqual(oldValue, newValue, true))
+        return;
 
-	float fNewValue = StringToFloat(newValue);
+    float fNewValue = StringToFloat(newValue);
 
-	if(convar == cMin)
-		gMin = fNewValue;
-	else if(convar == cMax)
-		gMax = fNewValue;
+    if(convar == cMin)
+        gMin = fNewValue;
+    else if(convar == cMax)
+        gMax = fNewValue;
 }
 
 public Action OnPlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
 {
-	if(!gEnabled)
-		return Plugin_Continue;
-	int i = GetClientOfUserId(GetEventInt(event, "userid"));
-	SetEntPropFloat(i, Prop_Send, "m_flModelScale", gSize);
-	return Plugin_Continue;
+    if(!gEnabled)
+        return Plugin_Continue;
+    int i = GetClientOfUserId(GetEventInt(event, "userid"));
+    SetEntPropFloat(i, Prop_Send, "m_flModelScale", gSize);
+    return Plugin_Continue;
 }
 
 public void OnClientPostAdminCheck(int i)
 {
-	if(!gEnabled)
-		return;
+    if(!gEnabled)
+        return;
     SetEntPropFloat(i, Prop_Send, "m_flModelScale", gSize);
 }
 
 public int RRM_Callback_Size(bool enable, float value)
 {
-	gEnabled = enable;
-	if(gEnabled)
-	{
-		gSize = value;
-		SetSize();
-	}
-	else
-		RemoveSize();
-	return gEnabled;
+    gEnabled = enable;
+    if(gEnabled)
+    {
+        gSize = value;
+        SetSize();
+    }
+    else
+        RemoveSize();
+    return gEnabled;
 }
 
 void SetSize()
 {
-	for (int i = 1; i <= MaxClients; i++)
-	{
-		if(!IsClientInGame(i))
-			continue;
+    for (int i = 1; i <= MaxClients; i++)
+    {
+        if(!IsClientInGame(i))
+            continue;
         SetEntPropFloat(i, Prop_Send, "m_flModelScale", gSize);
-	}
+    }
 }
 
 void RemoveSize()
 {
-	for (int i = 1; i <= MaxClients; i++)
-	{
-		if(!IsClientInGame(i))
-			continue;
+    for (int i = 1; i <= MaxClients; i++)
+    {
+        if(!IsClientInGame(i))
+            continue;
         SetEntPropFloat(i, Prop_Send, "m_flModelScale", 1.0);
-	}
+    }
 }

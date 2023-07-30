@@ -17,7 +17,7 @@ int gEnabled = 0;
 
 public Plugin myinfo =
 {
-	name = "[RRM] Friendly Fire Modifier",
+    name = "[RRM] Friendly Fire Modifier",
     author = "Katsute",
     description = "Modifier that sets game to friendly fire",
     version = "1.0"
@@ -25,35 +25,35 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
-	if(RRM_IsRegOpen())
-		RegisterModifiers();
+    if(RRM_IsRegOpen())
+        RegisterModifiers();
 
-	AutoExecConfig(true, "rrm_friendly", "rrm");
+    AutoExecConfig(true, "rrm_friendly", "rrm");
 }
 
 public void OnPluginEnd()
 {
-	DisableFriendly();
+    DisableFriendly();
 }
 
 public int RRM_OnRegOpen()
 {
-	RegisterModifiers();
+    RegisterModifiers();
 }
 
 void RegisterModifiers()
 {
-	RRM_Register("Friendly Fire", 0.0, 0.0, false, RRM_Callback_Friendly);
+    RRM_Register("Friendly Fire", 0.0, 0.0, false, RRM_Callback_Friendly);
 }
 
 public int RRM_Callback_Friendly(bool enable, float value)
 {
-	gEnabled = enable;
-	if(gEnabled)
-		EnableFriendly();
-	else
-		DisableFriendly();
-	return enable;
+    gEnabled = enable;
+    if(gEnabled)
+        EnableFriendly();
+    else
+        DisableFriendly();
+    return enable;
 }
 
 void EnableFriendly()
