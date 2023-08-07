@@ -26,6 +26,7 @@ public void OnPluginStart(){
         RegisterModifiers();
 
     AddCommandListener(OnDropItem, "dropitem");
+    HookEvent("player_changeclass", OnChangeClass);
 
     AutoExecConfig(true, "rrm_powerup_agility", "rrm");
 }
@@ -63,6 +64,14 @@ public int RRM_Callback_Powerup(bool enable, float value){
 public void OnEntityCreated(int ent, const char[] classname){
     if(gEnabled && strncmp(classname, "item_power", 10) == 0 && IsValidEntity(ent))
         AcceptEntityInput(ent, "Kill");
+}
+
+public void OnChangeClass(const Handle event, const char[] name, const bool dontBroadcast){
+    if(gEnabled){
+        int client = GetClientOfUserId(GetEventInt(event, "userid"));
+        if(IsClientInGame(client) && !TF2_IsPlayerInCondition(client, cond))
+            TF2_AddCondition(client, cond);
+    }
 }
 
 public void OnExitResupply(const int resupply, const int client){
