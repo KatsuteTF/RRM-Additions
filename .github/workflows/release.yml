@@ -37,6 +37,13 @@ jobs:
           spcomp -i ./ rrm_marked.sp
           spcomp -i ./ rrm_medieval.sp
           spcomp -i ./ rrm_milk.sp
+          spcomp -i ./ rrm_powerup_agility.sp
+          spcomp -i ./ rrm_powerup_haste.sp
+          spcomp -i ./ rrm_powerup_plague.sp
+          spcomp -i ./ rrm_powerup_precision.sp
+          spcomp -i ./ rrm_powerup_resistance.sp
+          spcomp -i ./ rrm_powerup_strength.sp
+          spcomp -i ./ rrm_powerup_vampire.sp
           spcomp -i ./ rrm_resize.sp
           spcomp -i ./ rrm_stun.sp
           spcomp -i ./ rrm_taunt.sp
