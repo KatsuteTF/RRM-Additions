@@ -28,6 +28,10 @@ jobs:
 
       - name: Compile Plugin
         run: |
+          spcomp -i ./ rrm_attribute_clip.sp
+          spcomp -i ./ rrm_attribute_firing.sp
+          spcomp -i ./ rrm_attribute_projectile.sp
+          spcomp -i ./ rrm_attribute_spread.sp
           spcomp -i ./ rrm_bleed.sp
           spcomp -i ./ rrm_charge.sp
           spcomp -i ./ rrm_explode.sp
@@ -45,6 +49,7 @@ jobs:
           spcomp -i ./ rrm_powerup_strength.sp
           spcomp -i ./ rrm_powerup_vampire.sp
           spcomp -i ./ rrm_resize.sp
+          spcomp -i ./ rrm_skeletons.sp
           spcomp -i ./ rrm_stun.sp
           spcomp -i ./ rrm_taunt.sp
 
