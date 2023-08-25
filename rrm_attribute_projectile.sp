@@ -91,7 +91,7 @@ public void PostInventoryApplication(const Handle event, const char[] name, cons
 }
 
 public Action PostInventoryApplicationDelayed(const Handle timer, const int client){
-    if(IsClientInGame(client)){
+    if(gEnabled && IsClientInGame(client)){
         int primary   = GetPlayerWeaponSlot(client, 0);
         int secondary = GetPlayerWeaponSlot(client, 1);
         int melee     = GetPlayerWeaponSlot(client, 2);
