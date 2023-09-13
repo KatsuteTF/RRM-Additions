@@ -46,7 +46,7 @@ public int RRM_Callback_Powerup(bool enable, float value){
         while((ent = FindEntityByClassname(ent, "func_respawnroom")) != -1)
             SDKHook(ent, SDKHook_EndTouchPost, OnExitResupply);
 
-        for(int i = 1; i < MaxClients; i++)
+        for(int i = 1; i <= MaxClients; i++)
             if(IsClientInGame(i) && IsPlayerAlive(i))
                 ApplyPowerup(i);
     }else{
@@ -54,7 +54,7 @@ public int RRM_Callback_Powerup(bool enable, float value){
         while((ent = FindEntityByClassname(ent, "func_respawnroom")) != -1)
             SDKUnhook(ent, SDKHook_EndTouchPost, OnExitResupply);
 
-        for(int i = 1; i < MaxClients; i++)
+        for(int i = 1; i <= MaxClients; i++)
             if(IsClientInGame(i) && IsPlayerAlive(i))
                 RemovePowerup(i);
     }
@@ -75,7 +75,7 @@ public void OnChangeClass(const Handle event, const char[] name, const bool dont
 }
 
 public void OnExitResupply(const int resupply, const int client){
-    if(gEnabled && 0 < client < MaxClients && IsClientInGame(client) && IsPlayerAlive(client))
+    if(gEnabled && 0 < client <= MaxClients && IsClientInGame(client) && IsPlayerAlive(client))
         ApplyPowerup(client);
 }
 

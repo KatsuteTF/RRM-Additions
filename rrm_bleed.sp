@@ -40,7 +40,7 @@ public void OnPluginStart()
     gMax = cMax.FloatValue;
     gDuration = cDuration.FloatValue;
 
-    for (int i = 1; i < MaxClients; i++)
+    for (int i = 1; i <= MaxClients; i++)
     {
         if(!IsClientInGame(i))
             continue;

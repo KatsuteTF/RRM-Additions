@@ -59,7 +59,7 @@ public int RRM_Callback_Medieval(bool enable, float value)
 void EnableMedieval()
 {
     GameRules_SetProp("m_bPlayingMedieval", 1);
-    for(int i = 1; i < MaxClients; i++){
+    for(int i = 1; i <= MaxClients; i++){
         if(IsClientInGame(i)){
             int health = GetClientHealth(i);
             TF2_RemoveAllWeapons(i);
@@ -72,7 +72,7 @@ void EnableMedieval()
 void DisableMedieval()
 {
     GameRules_SetProp("m_bPlayingMedieval", 0);
-    for(int i = 1; i < MaxClients; i++){
+    for(int i = 1; i <= MaxClients; i++){
         if(IsClientInGame(i)){
             int health = GetClientHealth(i);
             TF2_RemoveAllWeapons(i);

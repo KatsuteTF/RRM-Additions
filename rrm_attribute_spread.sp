@@ -72,7 +72,7 @@ public int RRM_Callback_Attribute(bool enable, float value){
     gEnabled = enable;
     if(gEnabled)
         gMul = value;
-    for(int i = 1; i < MaxClients; i++){
+    for(int i = 1; i <= MaxClients; i++){
         if(IsClientInGame(i)){
             int health = GetClientHealth(i);
             TF2_RemoveAllWeapons(i);
