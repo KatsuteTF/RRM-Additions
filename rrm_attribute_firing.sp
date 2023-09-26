@@ -128,7 +128,7 @@ public void ApplyPrimary(const int ent){
 
 public void ApplySecondary(const int ent){
     ApplyAttribute(ent, 6, 1/gMul);
-    ApplyAttribute(ent, 97, (1/gMul) > 1 ? 1.0 : (1/gMul));
+    ApplyAttribute(ent, 97, (1/gMul) > 1.0 ? 1.0 : (1/gMul));
 }
 
 public void ApplyMelee(const int ent){

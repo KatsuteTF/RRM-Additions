@@ -126,7 +126,7 @@ public void ApplyPrimary(const int ent){
         ApplyAttribute(ent, 4, gMul);
 	else
         ApplyAttribute(ent, 335, gMul);
-    ApplyAttribute(ent, 97, 1/gMul);
+    ApplyAttribute(ent, 97, (1/gMul) > 1.0 ? 1.0 : (1/gMul));
 }
 
 public void ApplySecondary(const int ent){
