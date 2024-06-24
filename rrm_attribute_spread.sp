@@ -1,4 +1,4 @@
-// Copyright (C) 2023 Katsute | Licensed under CC BY-NC-SA 4.0
+// Copyright (C) 2024 Katsute | Licensed under CC BY-NC-SA 4.0
 
 #pragma semicolon 1
 
@@ -122,12 +122,15 @@ public void ApplyAttribute(const int ent, const int attribute, const float value
 
 public void ApplyPrimary(const int ent){
     ApplyAttribute(ent, 106, gMul);
+    ApplyAttribute(ent, 411, gMul);
 }
 
 public void ApplySecondary(const int ent){
     ApplyAttribute(ent, 106, gMul);
+    ApplyAttribute(ent, 411, gMul);
 }
 
 public void ApplyMelee(const int ent){
     ApplyAttribute(ent, 106, gMul);
+    ApplyAttribute(ent, 411, gMul);
 }
