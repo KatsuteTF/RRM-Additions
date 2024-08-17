@@ -29,7 +29,7 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 |`rrm_fire_min`|`0.1`|Min fire chance|
 |`rrm_fire_max`|`1.0`|Max fire chance|
 |`rrm_fire_duration`|`3.0`|Fire duration|
-|`rrm_friction_min`|`0`|Min friction|
+|`rrm_friction_min`|`0.1`|Min friction|
 |`rrm_friction_max`|`1.0`|Max friction|
 |`rrm_jarate_min`|`0.1`|Min jarate chance|
 |`rrm_jarate_max`|`1.0`|Max jarate chance|
