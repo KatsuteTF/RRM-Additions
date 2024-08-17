@@ -7,6 +7,8 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 |`rrm_attribute_clip_min`|`0.5`|Min clip size|
 |`rrm_attribute_clip_max`|`4.0`|Max clip size|
 |`rrm_attribute_clip_delay`|`1.2`|Attribute delay|
+|`rrm_attribute_crit_duration`|`5`|Crit duration|
+|`rrm_attribute_crit_delay`|`1.2`|Attribute delay|
 |`rrm_attribute_firing_min`|`0.5`|Min firing speed|
 |`rrm_attribute_firing_max`|`4.0`|Max firing speed|
 |`rrm_attribute_firing_delay`|`1.2`|Attribute delay|
@@ -27,6 +29,8 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 |`rrm_fire_min`|`0.1`|Min fire chance|
 |`rrm_fire_max`|`1.0`|Max fire chance|
 |`rrm_fire_duration`|`3.0`|Fire duration|
+|`rrm_friction_min`|`0`|Min friction|
+|`rrm_friction_max`|`1.0`|Max friction|
 |`rrm_jarate_min`|`0.1`|Min jarate chance|
 |`rrm_jarate_max`|`1.0`|Max jarate chance|
 |`rrm_jarate_duration`|`3.0`|Jarate duration|
