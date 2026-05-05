@@ -48,6 +48,21 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 |`rrm_stun_duration`|`3.0`|Stun duration|
 |`rrm_taunt_min`|`0.1`|Min taunt chance|
 |`rrm_taunt_max`|`1.0`|Max taunt chance|
+|`rrm_mini_sentry_min`|`0.1`|Min mini sentry chance|
+|`rrm_mini_sentry_max`|`1.0`|Max mini sentry chance|
+|`rrm_mini_sentry_duration`|`30.0`|Mini sentry duration|
+|`rrm_health_score_min`|`5.0`|Min HP per kill|
+|`rrm_health_score_max`|`20.0`|Max HP per kill|
+|`rrm_damage_score_min`|`1.0`|Min bonus damage per kill|
+|`rrm_damage_score_max`|`5.0`|Max bonus damage per kill|
+|`rrm_random_damage_min`|`0.1`|Min damage multiplier|
+|`rrm_random_damage_max`|`3.0`|Max damage multiplier|
+|`rrm_percent_damage_min`|`0.05`|Min percentage of max health as damage|
+|`rrm_percent_damage_max`|`0.5`|Max percentage of max health as damage|
+|`rrm_swap_min`|`0.1`|Min swap chance|
+|`rrm_swap_max`|`1.0`|Max swap chance|
+|`rrm_explosive_shot_damage`|`50.0`|Explosion damage|
+|`rrm_explosive_shot_radius`|`150.0`|Explosion radius|
 
 [![Creative Commons License](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
 
