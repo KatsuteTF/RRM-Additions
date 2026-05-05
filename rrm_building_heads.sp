@@ -88,7 +88,7 @@ public void OnPlayerDeath(const Handle event, const char[] name, const bool dont
 void AttachBuilding(int client)
 {
     // randomly pick sentry (0) or dispenser (1)
-    bool isSentry = (GetURandomInt() % 2 == 0);
+    bool isSentry = (GetRandomInt(0, 1) == 0);
     char classname[32];
     if(isSentry)
         strcopy(classname, sizeof(classname), "obj_sentrygun");
@@ -99,7 +99,7 @@ void AttachBuilding(int client)
     if(ent == -1)
         return;
 
-    int level = (GetURandomInt() % 3) + 1;
+    int level = GetRandomInt(1, 3);
 
     SetEntProp(ent, Prop_Send, "m_iTeamNum", GetClientTeam(client));
     SetEntProp(ent, Prop_Send, "m_hBuilder", client);

@@ -73,7 +73,7 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 
 ### Additional Modifier Ideas
 
-The following are potential future modifiers. Ideas that only produce visual/audio effects (screen shake, HUD overlays, sound changes) are avoided because bots are unaffected by them and they would create an unbalanced experience.
+The following are potential future modifiers. Ideas that only produce visual/audio effects (screen shake, HUD overlays, sound changes) are avoided because bots are unaffected by them — and they would create an unbalanced experience.
 
 | modifier | description |
 |---|---|

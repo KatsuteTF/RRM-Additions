@@ -109,7 +109,7 @@ public void OnPlayerDeath(const Handle event, const char[] name, const bool dont
         if(sentry == -1)
             return;
 
-        int level = (GetURandomInt() % 3) + 1;
+        int level = GetRandomInt(1, 3);
 
         SetEntProp(sentry, Prop_Send, "m_iTeamNum", GetClientTeam(attacker));
         SetEntProp(sentry, Prop_Send, "m_hBuilder", attacker);
