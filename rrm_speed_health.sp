@@ -28,8 +28,8 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
-    cMin = CreateConVar("rrm_speed_health_min", "1.5", "Minimum speed multiplier at near-death.");
-    cMax = CreateConVar("rrm_speed_health_max", "2.5", "Maximum speed multiplier at near-death.");
+    cMin = CreateConVar("rrm_speed_health_min", "1.5", "Minimum value for the random number generator.");
+    cMax = CreateConVar("rrm_speed_health_max", "2.5", "Maximum value for the random number generator.");
 
     cMin.AddChangeHook(OnConvarChanged);
     cMax.AddChangeHook(OnConvarChanged);
