@@ -7,6 +7,7 @@
 #include <sourcemod>
 #include <sdkhooks>
 #include <tf2>
+#include <tf2_stocks>
 #include <rrm>
 
 TFCond cond = TFCond_RuneResist;
