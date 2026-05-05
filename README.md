@@ -63,6 +63,8 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 |`rrm_swap_max`|`1.0`|Max swap chance|
 |`rrm_explosive_shot_damage`|`50.0`|Explosion damage|
 |`rrm_explosive_shot_radius`|`150.0`|Explosion radius|
+|`rrm_speed_health_min`|`1.5`|Min speed multiplier at near-death|
+|`rrm_speed_health_max`|`2.5`|Max speed multiplier at near-death|
 
 [![Creative Commons License](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
 
