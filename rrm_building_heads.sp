@@ -99,9 +99,11 @@ void AttachBuilding(int client)
     if(ent == -1)
         return;
 
+    int level = (GetURandomInt() % 3) + 1;
+
     SetEntProp(ent, Prop_Send, "m_iTeamNum", GetClientTeam(client));
     SetEntProp(ent, Prop_Send, "m_hBuilder", client);
-    SetEntProp(ent, Prop_Send, "m_bMiniBuilding", 1);
+    SetEntProp(ent, Prop_Send, "m_iUpgradeLevel", level);
 
     float origin[3];
     GetClientAbsOrigin(client, origin);
