@@ -6,37 +6,27 @@
 
 #include <sourcemod>
 #include <sdkhooks>
-#include <tf2attributes>
 #include <tf2>
 #include <tf2_stocks>
 #include <rrm>
 
 #pragma newdecls required
 
+#define IN_JUMP 2
+
 int gEnabled = 0;
-float gValue = 0.0;
-ConVar cMin = null, cMax = null;
-float gMin = 0.0, gMax = 0.0;
+bool gJump[MAXPLAYERS + 1];
 
 public Plugin myinfo =
 {
     name = "[RRM] Jump Shot Modifier",
     author = "Katsute",
-    description = "Modifier that launches players upward when they are shot.",
+    description = "Modifier that makes players jump when they are shot.",
     version = "1.0"
 };
 
 public void OnPluginStart()
 {
-    cMin = CreateConVar("rrm_jump_shot_min", "200.0", "Minimum value for the random number generator.");
-    cMax = CreateConVar("rrm_jump_shot_max", "600.0", "Maximum value for the random number generator.");
-
-    cMin.AddChangeHook(OnConvarChanged);
-    cMax.AddChangeHook(OnConvarChanged);
-
-    gMin = cMin.FloatValue;
-    gMax = cMax.FloatValue;
-
     for(int i = 1; i <= MaxClients; i++)
     {
         if(!IsClientInGame(i))
@@ -57,20 +47,7 @@ public int RRM_OnRegOpen()
 
 void RegisterModifiers()
 {
-    RRM_Register("Jump Shot", gMin, gMax, false, RRM_Callback_JumpShot);
-}
-
-public void OnConvarChanged(Handle convar, char[] oldValue, char[] newValue)
-{
-    if(StrEqual(oldValue, newValue, true))
-        return;
-
-    float fNewValue = StringToFloat(newValue);
-
-    if(convar == cMin)
-        gMin = fNewValue;
-    else if(convar == cMax)
-        gMax = fNewValue;
+    RRM_Register("Jump Shot", 0.0, 0.0, false, RRM_Callback_JumpShot);
 }
 
 public void OnClientPostAdminCheck(int client)
@@ -81,8 +58,11 @@ public void OnClientPostAdminCheck(int client)
 public int RRM_Callback_JumpShot(bool enable, float value)
 {
     gEnabled = enable;
-    if(gEnabled)
-        gValue = value;
+    if(!gEnabled)
+    {
+        for(int i = 1; i <= MaxClients; i++)
+            gJump[i] = false;
+    }
     return gEnabled;
 }
 
@@ -99,10 +79,21 @@ public Action OnTakeDamage(int victim, int &attacker, int &inflictor, float &dam
     if(victim == attacker)
         return Plugin_Continue;
 
-    float vel[3];
-    GetEntPropVector(victim, Prop_Data, "m_vecAbsVelocity", vel);
-    vel[2] += gValue;
-    TeleportEntity(victim, NULL_VECTOR, NULL_VECTOR, vel);
+    gJump[victim] = true;
 
     return Plugin_Continue;
+}
+
+public Action OnPlayerRunCmd(int client, int &buttons, int &impulse, float vel[3], float angles[3], int &weapon,
+    int &subtype, int &cmdnum, int &tickcount, int &seed, int mouse[2])
+{
+    if(!gEnabled || !gJump[client])
+        return Plugin_Continue;
+
+    if(!IsClientInGame(client) || !IsPlayerAlive(client))
+        return Plugin_Continue;
+
+    gJump[client] = false;
+    buttons |= IN_JUMP;
+    return Plugin_Changed;
 }

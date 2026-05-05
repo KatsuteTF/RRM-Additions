@@ -68,25 +68,7 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 |`rrm_sentry_min`|`0.1`|Min sentry chance|
 |`rrm_sentry_max`|`1.0`|Max sentry chance|
 |`rrm_sentry_duration`|`30.0`|Sentry duration|
-|`rrm_jump_shot_min`|`200.0`|Min upward velocity on hit|
-|`rrm_jump_shot_max`|`600.0`|Max upward velocity on hit|
 
-### Additional Modifier Ideas
-
-The following are potential future modifiers. Ideas that only produce visual/audio effects (screen shake, HUD overlays, sound changes) are avoided because bots are unaffected by them — and they would create an unbalanced experience.
-
-| modifier | description |
-|---|---|
-| Gravity | Reduces server/player gravity so everyone floats — affects bots and players equally |
-| Speed Ammo | Player moves faster as they run out of ammo — punishes suppressive fire, rewards aggressive play |
-| Health Drain | All players slowly lose health over time — keeps fights moving and affects everyone including bots |
-| Damage Ramp | Each consecutive hit on the same target within a short window deals increasing damage |
-| Teleport On Kill | Teleports the killer to a random location on the map after each kill |
-| Forced Melee | Forces all players to their melee slot — bots will switch too |
-| Revive On Kill | Restores a burst of health on kill (lifesteal) — rewards aggression |
-| Gravity On Hit | Temporarily reduces the victim's gravity when they take damage, causing them to float |
-| Class Randomizer | Assigns a random class to each player on spawn |
-| Infinite Ammo | Disables ammo consumption — affects all players and bots |
 
 [![Creative Commons License](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
 
