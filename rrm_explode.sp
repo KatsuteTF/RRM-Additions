@@ -6,9 +6,6 @@
 
 #include <sourcemod>
 #include <sdkhooks>
-#include <tf2attributes>
-#include <tf2>
-#include <tf2_stocks>
 #include <rrm>
 
 #pragma newdecls required

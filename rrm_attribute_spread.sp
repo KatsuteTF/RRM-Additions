@@ -5,7 +5,6 @@
 #define RRM_VERSION "1.0"
 
 #include <sourcemod>
-#include <sdkhooks>
 #include <tf2attributes>
 #include <tf2>
 #include <tf2_stocks>
