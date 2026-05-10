@@ -51,10 +51,6 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 |`rrm_mini_sentry_min`|`0.1`|Min mini sentry chance|
 |`rrm_mini_sentry_max`|`1.0`|Max mini sentry chance|
 |`rrm_mini_sentry_duration`|`30.0`|Mini sentry duration|
-|`rrm_health_score_min`|`5.0`|Min HP per kill|
-|`rrm_health_score_max`|`20.0`|Max HP per kill|
-|`rrm_damage_score_min`|`1.0`|Min bonus damage per kill|
-|`rrm_damage_score_max`|`5.0`|Max bonus damage per kill|
 |`rrm_random_damage_min`|`0.1`|Min damage multiplier|
 |`rrm_random_damage_max`|`3.0`|Max damage multiplier|
 |`rrm_percent_damage_min`|`0.05`|Min percentage of max health as damage|
@@ -68,6 +64,22 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 |`rrm_sentry_min`|`0.1`|Min sentry chance|
 |`rrm_sentry_max`|`1.0`|Max sentry chance|
 |`rrm_sentry_duration`|`30.0`|Sentry duration|
+|`rrm_crit_collect_duration`|`5.0`|Crit duration on collect|
+|`rrm_uber_kill_min`|`0.1`|Min uber on kill chance|
+|`rrm_uber_kill_max`|`1.0`|Max uber on kill chance|
+|`rrm_uber_kill_duration`|`5.0`|Uber duration on kill|
+|`rrm_heal_move_min`|`0.1`|Min heal on move chance|
+|`rrm_heal_move_max`|`1.0`|Max heal on move chance|
+|`rrm_heal_move_distance`|`500.0`|Distance to travel before heal chance|
+|`rrm_heal_move_hp`|`25`|HP healed per trigger|
+|`rrm_crit_move_min`|`0.1`|Min crit on move chance|
+|`rrm_crit_move_max`|`1.0`|Max crit on move chance|
+|`rrm_crit_move_distance`|`500.0`|Distance to travel before crit chance|
+|`rrm_crit_move_duration`|`3.0`|Crit duration per trigger|
+|`rrm_damage_move_min`|`0.1`|Min damage on move chance|
+|`rrm_damage_move_max`|`1.0`|Max damage on move chance|
+|`rrm_damage_move_distance`|`500.0`|Distance to travel before damage chance|
+|`rrm_damage_move_dmg`|`25`|Damage dealt per trigger|
 
 
 [![Creative Commons License](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
