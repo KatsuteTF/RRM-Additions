@@ -31,15 +31,18 @@ public void OnPluginStart()
 
     AutoExecConfig(true, "rrm_building_heads", "rrm");
 
+    HookEvent("player_spawn", OnPlayerSpawn);
+    HookEvent("player_death", OnPlayerDeath);
+}
+
+public void OnMapStart()
+{
     PrecacheModel("models/buildables/sentry1.mdl", true);
     PrecacheModel("models/buildables/sentry2.mdl", true);
     PrecacheModel("models/buildables/sentry3.mdl", true);
     PrecacheModel("models/buildables/dispenser.mdl", true);
     PrecacheModel("models/buildables/dispenser2.mdl", true);
     PrecacheModel("models/buildables/dispenser3.mdl", true);
-
-    HookEvent("player_spawn", OnPlayerSpawn);
-    HookEvent("player_death", OnPlayerDeath);
 }
 
 public void OnPluginEnd()
