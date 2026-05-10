@@ -64,6 +64,20 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 |`rrm_sentry_min`|`0.1`|Min sentry chance|
 |`rrm_sentry_max`|`1.0`|Max sentry chance|
 |`rrm_sentry_duration`|`30.0`|Sentry duration|
+|`rrm_random_size_min`|`0.25`|Min random size|
+|`rrm_random_size_max`|`2.0`|Max random size|
+|`rrm_monoculus_duration`|`30.0`|Monoculus duration|
+|`rrm_horseman_duration`|`30.0`|Horseman duration|
+|`rrm_rocket_shot_min`|`0.1`|Min rocket shot chance|
+|`rrm_rocket_shot_max`|`1.0`|Max rocket shot chance|
+|`rrm_arrow_shot_min`|`0.1`|Min arrow shot chance|
+|`rrm_arrow_shot_max`|`1.0`|Max arrow shot chance|
+|`rrm_grenade_shot_min`|`0.1`|Min grenade shot chance|
+|`rrm_grenade_shot_max`|`1.0`|Max grenade shot chance|
+|`rrm_grenade_rain_min`|`0.1`|Min grenade rain chance|
+|`rrm_grenade_rain_max`|`1.0`|Max grenade rain chance|
+|`rrm_grenade_rain_interval`|`3.0`|Seconds between grenade rain checks|
+|`rrm_grenade_rain_count`|`3`|Grenades spawned per trigger|
 |`rrm_crit_collect_duration`|`5.0`|Crit duration on collect|
 |`rrm_uber_kill_min`|`0.1`|Min uber on kill chance|
 |`rrm_uber_kill_max`|`1.0`|Max uber on kill chance|
