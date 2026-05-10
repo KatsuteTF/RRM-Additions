@@ -36,12 +36,9 @@ jobs:
               exit 1
           fi
 
-      - name: Package Plugins
-        run: zip plugins.zip *.smx
-
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: plugins
-          path: plugins.zip
+          path: "*.smx"
           retention-days: 1
