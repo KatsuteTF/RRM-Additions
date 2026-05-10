@@ -26,9 +26,14 @@ jobs:
 
       - name: Compile Plugins
         run: |-
+          failed=0
           for file in *.sp; do
-              spcomp -i ./ "$file"
+              spcomp -i ./ "$file" || failed=$((failed + 1))
           done
+          if [ "$failed" -gt 0 ]; then
+              echo "##[error]$failed plugin(s) failed to compile"
+              exit 1
+          fi
 
       - name: Package Plugins
         run: zip plugins.zip *.smx

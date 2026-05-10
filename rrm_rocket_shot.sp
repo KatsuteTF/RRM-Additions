@@ -97,13 +97,13 @@ void SpawnRocket(int client)
     GetClientEyePosition(client, pos);
     GetClientEyeAngles(client, ang);
 
-    float forward[3];
-    GetAngleVectors(ang, forward, NULL_VECTOR, NULL_VECTOR);
+    float fwd[3];
+    GetAngleVectors(ang, fwd, NULL_VECTOR, NULL_VECTOR);
 
     float vel[3];
-    vel[0] = forward[0] * ROCKET_SPEED;
-    vel[1] = forward[1] * ROCKET_SPEED;
-    vel[2] = forward[2] * ROCKET_SPEED;
+    vel[0] = fwd[0] * ROCKET_SPEED;
+    vel[1] = fwd[1] * ROCKET_SPEED;
+    vel[2] = fwd[2] * ROCKET_SPEED;
 
     int rocket = CreateEntityByName("tf_projectile_rocket");
     if(rocket == -1)
