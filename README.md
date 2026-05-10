@@ -78,6 +78,18 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 |`rrm_grenade_rain_max`|`1.0`|Max grenade rain chance|
 |`rrm_grenade_rain_interval`|`3.0`|Seconds between grenade rain checks|
 |`rrm_grenade_rain_count`|`3`|Grenades spawned per trigger|
+|`rrm_arrow_rain_min`|`0.1`|Min arrow rain chance|
+|`rrm_arrow_rain_max`|`1.0`|Max arrow rain chance|
+|`rrm_arrow_rain_interval`|`3.0`|Seconds between arrow rain checks|
+|`rrm_arrow_rain_count`|`3`|Arrows spawned per trigger|
+|`rrm_jar_rain_min`|`0.1`|Min jar rain chance|
+|`rrm_jar_rain_max`|`1.0`|Max jar rain chance|
+|`rrm_jar_rain_interval`|`3.0`|Seconds between jar rain checks|
+|`rrm_jar_rain_count`|`3`|Jars spawned per trigger|
+|`rrm_guillotine_rain_min`|`0.1`|Min guillotine rain chance|
+|`rrm_guillotine_rain_max`|`1.0`|Max guillotine rain chance|
+|`rrm_guillotine_rain_interval`|`3.0`|Seconds between guillotine rain checks|
+|`rrm_guillotine_rain_count`|`3`|Guillotines spawned per trigger|
 |`rrm_crit_collect_duration`|`5.0`|Crit duration on collect|
 |`rrm_uber_kill_min`|`0.1`|Min uber on kill chance|
 |`rrm_uber_kill_max`|`1.0`|Max uber on kill chance|

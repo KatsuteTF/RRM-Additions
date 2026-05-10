@@ -32,8 +32,11 @@ jobs:
               spcomp -i ./ "$file"
           done
 
+      - name: Package Plugins
+        run: zip plugins.zip *.smx
+
       - name: Deploy to GitHub Releases
         uses: AButler/upload-release-assets@v2.0.2
         with:
-          files: "*.smx"
+          files: "plugins.zip"
           repo-token: ${{ secrets.GITHUB_TOKEN }}

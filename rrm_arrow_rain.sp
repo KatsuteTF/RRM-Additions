@@ -22,18 +22,18 @@ Handle gTimer = null;
 
 public Plugin myinfo =
 {
-    name = "[RRM] Grenade Rain Modifier",
+    name = "[RRM] Arrow Rain Modifier",
     author = "Katsute",
-    description = "Modifier that rains grenades around players.",
+    description = "Modifier that rains flaming arrows around players.",
     version = "1.0"
 };
 
 public void OnPluginStart()
 {
-    cMin      = CreateConVar("rrm_grenade_rain_min",      "0.1", "Minimum value for the random number generator.");
-    cMax      = CreateConVar("rrm_grenade_rain_max",      "1.0", "Maximum value for the random number generator.");
-    cInterval = CreateConVar("rrm_grenade_rain_interval", "3.0", "Seconds between grenade rain checks.");
-    cCount    = CreateConVar("rrm_grenade_rain_count",    "3",   "Number of grenades to spawn per trigger.");
+    cMin      = CreateConVar("rrm_arrow_rain_min",      "0.1", "Minimum value for the random number generator.");
+    cMax      = CreateConVar("rrm_arrow_rain_max",      "1.0", "Maximum value for the random number generator.");
+    cInterval = CreateConVar("rrm_arrow_rain_interval", "3.0", "Seconds between arrow rain checks.");
+    cCount    = CreateConVar("rrm_arrow_rain_count",    "3",   "Number of arrows to spawn per trigger.");
 
     cMin.AddChangeHook(OnConvarChanged);
     cMax.AddChangeHook(OnConvarChanged);
@@ -48,7 +48,7 @@ public void OnPluginStart()
     if(RRM_IsRegOpen())
         RegisterModifiers();
 
-    AutoExecConfig(true, "rrm_grenade_rain", "rrm");
+    AutoExecConfig(true, "rrm_arrow_rain", "rrm");
 }
 
 public int RRM_OnRegOpen()
@@ -58,7 +58,7 @@ public int RRM_OnRegOpen()
 
 void RegisterModifiers()
 {
-    RRM_Register("Grenade Rain", gMin, gMax, false, RRM_Callback_GrenadeRain);
+    RRM_Register("Arrow Rain", gMin, gMax, false, RRM_Callback_ArrowRain);
 }
 
 public void OnConvarChanged(Handle convar, char[] oldValue, char[] newValue)
@@ -80,7 +80,7 @@ public void OnConvarChanged(Handle convar, char[] oldValue, char[] newValue)
         gCount = StringToInt(newValue);
 }
 
-public int RRM_Callback_GrenadeRain(bool enable, float value)
+public int RRM_Callback_ArrowRain(bool enable, float value)
 {
     gEnabled = enable;
     if(gEnabled)
@@ -115,13 +115,13 @@ public Action TimerTick(Handle timer)
         if(gChance > RandomFloat(RandomFloat(0.0, 1.0)))
         {
             for(int c = 0; c < gCount; c++)
-                SpawnGrenadeAbove(i);
+                SpawnArrowAbove(i);
         }
     }
     return Plugin_Continue;
 }
 
-void SpawnGrenadeAbove(int client)
+void SpawnArrowAbove(int client)
 {
     float origin[3];
     GetClientAbsOrigin(client, origin);
@@ -137,15 +137,18 @@ void SpawnGrenadeAbove(int client)
     float vel[3];
     vel[2] = -600.0;
 
-    int pipe = CreateEntityByName("tf_projectile_pipe");
-    if(pipe == -1)
+    float ang[3] = {90.0, 0.0, 0.0};
+
+    int arrow = CreateEntityByName("tf_projectile_arrow");
+    if(arrow == -1)
         return;
 
-    SetEntProp(pipe, Prop_Send, "m_iTeamNum", 0);
+    SetEntProp(arrow, Prop_Send, "m_iTeamNum",      0);
+    SetEntProp(arrow, Prop_Send, "m_bFlamingArrow", 1);
 
-    DispatchSpawn(pipe);
-    TeleportEntity(pipe, pos, NULL_VECTOR, vel);
-    ActivateEntity(pipe);
+    DispatchSpawn(arrow);
+    TeleportEntity(arrow, pos, ang, vel);
+    ActivateEntity(arrow);
 }
 
 float RandomFloat(const float min = 0.0, const float max = 1.0){
