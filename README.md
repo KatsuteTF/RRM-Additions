@@ -45,12 +45,18 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 |`rrm_milk_min`|`0.1`|Min mad milk chance|
 |`rrm_milk_max`|`1.0`|Max mad milk chance|
 |`rrm_milk_duration`|`3.0`|Mad milk duration|
+|`rrm_mini_sentry_min`|`0.1`|Min mini sentry chance|
+|`rrm_mini_sentry_max`|`1.0`|Max mini sentry chance|
+|`rrm_mini_sentry_duration`|`30.0`|Mini sentry duration|
 |`rrm_rain_jar_min`|`0.1`|Min jar chance|
 |`rrm_rain_jar_max`|`1.0`|Max jar chance|
 |`rrm_rain_jar_interval`|`10.0`|Seconds between jars|
 |`rrm_rain_grenade_min`|`0.1`|Min grenade chance|
 |`rrm_rain_grenade_max`|`1.0`|Max grenade chance|
 |`rrm_rain_grenade_interval`|`3.0`|Seconds between grenades|
+|`rrm_sentry_min`|`0.1`|Min sentry chance|
+|`rrm_sentry_max`|`1.0`|Max sentry chance|
+|`rrm_sentry_duration`|`30.0`|Sentry duration|
 |`rrm_skeleton_duration`|`30.0`|Skeleton duration|
 |`rrm_size_min`|`0.25`|Min size|
 |`rrm_size_max`|`1.35`|Max size|
