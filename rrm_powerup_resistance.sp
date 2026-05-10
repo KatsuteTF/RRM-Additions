@@ -79,7 +79,7 @@ public void OnExitResupply(const int resupply, const int client){
         ApplyPowerup(client);
 }
 
-public Action OnDropItem(const int client, const char[] cmd, any args){
+public Action OnDropItem(const int client, const char[] cmd, const int args){
     if(gEnabled)
         return Plugin_Handled;
     return Plugin_Continue;
