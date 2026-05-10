@@ -28,6 +28,7 @@ jobs:
         run: |-
           failed=0
           for file in *.sp; do
+              echo "Compiling $file..."
               spcomp -i ./ "$file" || failed=$((failed + 1))
           done
           if [ "$failed" -gt 0 ]; then

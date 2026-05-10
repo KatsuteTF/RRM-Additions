@@ -12,8 +12,6 @@
 
 #pragma newdecls required
 
-#define IN_JUMP 2
-
 int gEnabled = 0;
 
 public Plugin myinfo =

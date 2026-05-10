@@ -12,6 +12,8 @@
 
 #pragma newdecls required
 
+#define TFCond_Null view_as<TFCond>(-1)
+
 int gEnabled = 0;
 TFCond gPlayerCond[MAXPLAYERS + 1];
 

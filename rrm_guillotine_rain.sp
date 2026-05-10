@@ -58,7 +58,7 @@ public int RRM_OnRegOpen()
 
 void RegisterModifiers()
 {
-    RRM_Register("Guillotine Rain", gMin, gMax, false, RRM_Callback_GuilotineRain);
+    RRM_Register("Guillotine Rain", gMin, gMax, false, RRM_Callback_GuillotineRain);
 }
 
 public void OnConvarChanged(Handle convar, char[] oldValue, char[] newValue)
