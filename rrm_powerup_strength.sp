@@ -1,4 +1,4 @@
-// Copyright (C) 2024 Katsute | Licensed under CC BY-NC-SA 4.0
+// Copyright (C) 2026 Katsute | Licensed under CC BY-NC-SA 4.0
 
 #pragma semicolon 1
 
