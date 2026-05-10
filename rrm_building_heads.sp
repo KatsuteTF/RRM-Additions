@@ -31,6 +31,13 @@ public void OnPluginStart()
 
     AutoExecConfig(true, "rrm_building_heads", "rrm");
 
+    PrecacheModel("models/buildables/sentry1.mdl", true);
+    PrecacheModel("models/buildables/sentry2.mdl", true);
+    PrecacheModel("models/buildables/sentry3.mdl", true);
+    PrecacheModel("models/buildables/dispenser.mdl", true);
+    PrecacheModel("models/buildables/dispenser2.mdl", true);
+    PrecacheModel("models/buildables/dispenser3.mdl", true);
+
     HookEvent("player_spawn", OnPlayerSpawn);
     HookEvent("player_death", OnPlayerDeath);
 }
@@ -87,23 +94,23 @@ public void OnPlayerDeath(const Handle event, const char[] name, const bool dont
 
 void AttachBuilding(int client)
 {
-    // randomly pick sentry (0) or dispenser (1)
     bool isSentry = (GetRandomInt(0, 1) == 0);
-    char classname[32];
-    if(isSentry)
-        strcopy(classname, sizeof(classname), "obj_sentrygun");
-    else
-        strcopy(classname, sizeof(classname), "obj_dispenser");
+    int level = GetRandomInt(1, 3);
 
-    int ent = CreateEntityByName(classname);
+    char model[PLATFORM_MAX_PATH];
+    if(isSentry)
+        Format(model, sizeof(model), "models/buildables/sentry%d.mdl", level);
+    else if(level == 1)
+        strcopy(model, sizeof(model), "models/buildables/dispenser.mdl");
+    else
+        Format(model, sizeof(model), "models/buildables/dispenser%d.mdl", level);
+
+    int ent = CreateEntityByName("prop_dynamic");
     if(ent == -1)
         return;
 
-    int level = GetRandomInt(1, 3);
-
-    SetEntProp(ent, Prop_Send, "m_iTeamNum", GetClientTeam(client));
-    SetEntProp(ent, Prop_Send, "m_hBuilder", client);
-    SetEntProp(ent, Prop_Send, "m_iUpgradeLevel", level);
+    DispatchKeyValue(ent, "model", model);
+    DispatchKeyValue(ent, "solid", "0");
 
     float origin[3];
     GetClientAbsOrigin(client, origin);
@@ -111,9 +118,7 @@ void AttachBuilding(int client)
 
     DispatchSpawn(ent);
     TeleportEntity(ent, origin, angles, NULL_VECTOR);
-    ActivateEntity(ent);
 
-    // parent to player head
     SetVariantString("!activator");
     AcceptEntityInput(ent, "SetParent", client, ent);
     SetVariantString("head");
