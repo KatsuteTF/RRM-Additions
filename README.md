@@ -24,8 +24,13 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 |`rrm_charge_min`|`0.1`|Min charge chance|
 |`rrm_charge_max`|`1.0`|Max charge chance|
 |`rrm_charge_duration`|`3.0`|Charge duration|
+|`rrm_crit_pickup_duration`|`5.0`|Crit duration|
 |`rrm_explode_min`|`0.1`|Min explode chance|
 |`rrm_explode_max`|`1.0`|Max explode chance|
+|`rrm_explosive_shot_min`|`0.1`|Min explosive shot chance|
+|`rrm_explosive_shot_max`|`1.0`|Max explosive shot chance|
+|`rrm_explosive_shot_damage`|`50.0`|Explosion damage|
+|`rrm_explosive_shot_radius`|`150.0`|Explosion radius|
 |`rrm_fire_min`|`0.1`|Min fire chance|
 |`rrm_fire_max`|`1.0`|Max fire chance|
 |`rrm_fire_duration`|`3.0`|Fire duration|
@@ -43,11 +48,18 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 |`rrm_skeleton_duration`|`30.0`|Skeleton duration|
 |`rrm_size_min`|`0.25`|Min size|
 |`rrm_size_max`|`1.35`|Max size|
+|`rrm_size_random_min`|`0.25`|Min size|
+|`rrm_size_random_max`|`1.35`|Max size|
 |`rrm_stun_min`|`0.1`|Min stun chance|
 |`rrm_stun_max`|`1.0`|Max stun chance|
 |`rrm_stun_duration`|`3.0`|Stun duration|
+|`rrm_swap_min`|`0.1`|Min swap chance|
+|`rrm_swap_max`|`1.0`|Max swap chance|
 |`rrm_taunt_min`|`0.1`|Min taunt chance|
 |`rrm_taunt_max`|`1.0`|Max taunt chance|
+|`rrm_uber_min`|`0.1`|Min uber chance|
+|`rrm_uber_max`|`1.0`|Max uber chance|
+|`rrm_uber_duration`|`5.0`|Uber duration|
 
 [![Creative Commons License](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
 

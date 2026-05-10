@@ -29,7 +29,7 @@ static const TFCond gPowerups[] = {
 
 public Plugin myinfo =
 {
-    name = "[RRM] Powerup Collect Modifier",
+    name = "[RRM] Powerup Pickups Modifier",
     author = "Katsute",
     description = "Modifier that grants a random powerup on ammo or health pickup.",
     version = "2.0"
@@ -45,7 +45,7 @@ public void OnPluginStart()
 
     AddCommandListener(OnDropItem, "dropitem");
     HookEvent("item_pickup", OnItemPickup);
-    AutoExecConfig(true, "rrm_powerup_collect", "rrm");
+    AutoExecConfig(true, "rrm_powerup_pickup", "rrm");
 
 }
 

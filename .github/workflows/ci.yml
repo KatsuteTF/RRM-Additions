@@ -12,7 +12,7 @@ jobs:
       - name: Install SourceMod
         uses: KatsuteTF/Workflows/actions/setup-sourcepawn@main
         with:
-          sourcemod-version: "1.12.0"
+          sourcemod-version: "1.12.x"
 
       - name: Install TF2Attributes
         uses: KatsuteTF/Workflows/actions/curl@main

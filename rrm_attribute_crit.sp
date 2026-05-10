@@ -19,7 +19,7 @@ ConVar cDur = null, cDelay = null;
 float gDelay = 0.0;
 
 public Plugin myinfo = {
-    name = "[RRM] critter Modifier",
+    name = "[RRM] Crit Modifier",
     author = "Katsute",
     description = "Modifier that forces crit on kill.",
     version = "1.0"
