@@ -128,12 +128,14 @@ void AttachBuilding(int client)
 void DetachBuilding(int client)
 {
     int entref = gPlayerBuilding[client];
+    gPlayerBuilding[client] = INVALID_ENT_REFERENCE;
     if(entref == INVALID_ENT_REFERENCE)
         return;
+    // EntRefToEntIndex uses a serial number, so it returns INVALID_ENT_REFERENCE
+    // if the entity was already destroyed (e.g. from taking damage), preventing crashes.
     int ent = EntRefToEntIndex(entref);
     if(ent != INVALID_ENT_REFERENCE && IsValidEntity(ent))
         AcceptEntityInput(ent, "Kill");
-    gPlayerBuilding[client] = INVALID_ENT_REFERENCE;
 }
 
 void RemoveAllBuildings()
