@@ -35,16 +35,6 @@ public void OnPluginStart()
     HookEvent("player_death", OnPlayerDeath);
 }
 
-public void OnMapStart()
-{
-    PrecacheModel("models/buildables/sentry1.mdl", true);
-    PrecacheModel("models/buildables/sentry2.mdl", true);
-    PrecacheModel("models/buildables/sentry3.mdl", true);
-    PrecacheModel("models/buildables/dispenser.mdl", true);
-    PrecacheModel("models/buildables/dispenser2.mdl", true);
-    PrecacheModel("models/buildables/dispenser3.mdl", true);
-}
-
 public void OnPluginEnd()
 {
     RemoveAllBuildings();
@@ -97,23 +87,23 @@ public void OnPlayerDeath(const Handle event, const char[] name, const bool dont
 
 void AttachBuilding(int client)
 {
+    // randomly pick sentry (0) or dispenser (1)
     bool isSentry = (GetRandomInt(0, 1) == 0);
-    int level = GetRandomInt(1, 3);
-
-    char model[PLATFORM_MAX_PATH];
+    char classname[32];
     if(isSentry)
-        Format(model, sizeof(model), "models/buildables/sentry%d.mdl", level);
-    else if(level == 1)
-        strcopy(model, sizeof(model), "models/buildables/dispenser.mdl");
+        strcopy(classname, sizeof(classname), "obj_sentrygun");
     else
-        Format(model, sizeof(model), "models/buildables/dispenser%d.mdl", level);
+        strcopy(classname, sizeof(classname), "obj_dispenser");
 
-    int ent = CreateEntityByName("prop_dynamic");
+    int ent = CreateEntityByName(classname);
     if(ent == -1)
         return;
 
-    DispatchKeyValue(ent, "model", model);
-    DispatchKeyValue(ent, "solid", "0");
+    int level = GetRandomInt(1, 3);
+
+    SetEntProp(ent, Prop_Send, "m_iTeamNum", GetClientTeam(client));
+    SetEntProp(ent, Prop_Send, "m_hBuilder", client);
+    SetEntProp(ent, Prop_Send, "m_iUpgradeLevel", level);
 
     float origin[3];
     GetClientAbsOrigin(client, origin);
@@ -121,11 +111,16 @@ void AttachBuilding(int client)
 
     DispatchSpawn(ent);
     TeleportEntity(ent, origin, angles, NULL_VECTOR);
+    ActivateEntity(ent);
 
+    // parent to player head
     SetVariantString("!activator");
     AcceptEntityInput(ent, "SetParent", client, ent);
     SetVariantString("head");
     AcceptEntityInput(ent, "SetParentAttachment", client, ent);
+
+    // mark as a valid attached entity so the engine renders it (not invisible)
+    SetEntProp(ent, Prop_Send, "m_bValidatedAttachedEntity", true);
 
     gPlayerBuilding[client] = EntIndexToEntRef(ent);
 }
