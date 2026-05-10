@@ -22,18 +22,18 @@ Handle gTimer = null;
 
 public Plugin myinfo =
 {
-    name = "[RRM] Jar Rain Modifier",
+    name = "[RRM] Fireball Rain Modifier",
     author = "Katsute",
-    description = "Modifier that rains jarate and mad milk around players.",
+    description = "Modifier that rains Dragon's Fury fireballs around players.",
     version = "1.0"
 };
 
 public void OnPluginStart()
 {
-    cMin      = CreateConVar("rrm_jar_rain_min",      "0.1", "Minimum value for the random number generator.");
-    cMax      = CreateConVar("rrm_jar_rain_max",      "1.0", "Maximum value for the random number generator.");
-    cInterval = CreateConVar("rrm_jar_rain_interval", "3.0", "Seconds between jar rain checks.");
-    cCount    = CreateConVar("rrm_jar_rain_count",    "3",   "Number of jars to spawn per trigger.");
+    cMin      = CreateConVar("rrm_fireball_rain_min",      "0.1", "Minimum value for the random number generator.");
+    cMax      = CreateConVar("rrm_fireball_rain_max",      "1.0", "Maximum value for the random number generator.");
+    cInterval = CreateConVar("rrm_fireball_rain_interval", "3.0", "Seconds between fireball rain checks.");
+    cCount    = CreateConVar("rrm_fireball_rain_count",    "3",   "Number of fireballs to spawn per trigger.");
 
     cMin.AddChangeHook(OnConvarChanged);
     cMax.AddChangeHook(OnConvarChanged);
@@ -48,7 +48,7 @@ public void OnPluginStart()
     if(RRM_IsRegOpen())
         RegisterModifiers();
 
-    AutoExecConfig(true, "rrm_jar_rain", "rrm");
+    AutoExecConfig(true, "rrm_fireball_rain", "rrm");
 }
 
 public int RRM_OnRegOpen()
@@ -58,7 +58,7 @@ public int RRM_OnRegOpen()
 
 void RegisterModifiers()
 {
-    RRM_Register("Jar Rain", gMin, gMax, false, RRM_Callback_JarRain);
+    RRM_Register("Fireball Rain", gMin, gMax, false, RRM_Callback_FireballRain);
 }
 
 public void OnConvarChanged(Handle convar, char[] oldValue, char[] newValue)
@@ -80,7 +80,7 @@ public void OnConvarChanged(Handle convar, char[] oldValue, char[] newValue)
         gCount = StringToInt(newValue);
 }
 
-public int RRM_Callback_JarRain(bool enable, float value)
+public int RRM_Callback_FireballRain(bool enable, float value)
 {
     gEnabled = enable;
     if(gEnabled)
@@ -115,13 +115,13 @@ public Action TimerTick(Handle timer)
         if(gChance > RandomFloat(RandomFloat(0.0, 1.0)))
         {
             for(int c = 0; c < gCount; c++)
-                SpawnJarAbove(i);
+                SpawnFireballAbove(i);
         }
     }
     return Plugin_Continue;
 }
 
-void SpawnJarAbove(int client)
+void SpawnFireballAbove(int client)
 {
     float origin[3];
     GetClientAbsOrigin(client, origin);
@@ -134,26 +134,23 @@ void SpawnJarAbove(int client)
     pos[1] = origin[1] + Sine(angle)   * radius;
     pos[2] = origin[2] + 400.0;
 
+    float ang[3];
+    ang[0] = 90.0;
+    ang[1] = 0.0;
+    ang[2] = 0.0;
+
     float vel[3];
-    vel[2] = -600.0;
+    vel[2] = -1100.0;
 
-    char classname[32];
-    switch(GetURandomInt() % 3)
-    {
-        case 0: strcopy(classname, sizeof(classname), "tf_projectile_jar");
-        case 1: strcopy(classname, sizeof(classname), "tf_projectile_jar_milk");
-        case 2: strcopy(classname, sizeof(classname), "tf_projectile_jar_gas");
-    }
-
-    int jar = CreateEntityByName(classname);
-    if(jar == -1)
+    int fireball = CreateEntityByName("tf_projectile_dragon_fury_fireball");
+    if(fireball == -1)
         return;
 
-    SetEntProp(jar, Prop_Send, "m_iTeamNum", 0);
+    SetEntProp(fireball, Prop_Send, "m_iTeamNum", 0);
 
-    DispatchSpawn(jar);
-    TeleportEntity(jar, pos, NULL_VECTOR, vel);
-    ActivateEntity(jar);
+    DispatchSpawn(fireball);
+    TeleportEntity(fireball, pos, ang, vel);
+    ActivateEntity(fireball);
 }
 
 float RandomFloat(const float min = 0.0, const float max = 1.0){

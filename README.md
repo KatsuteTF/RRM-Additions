@@ -74,6 +74,10 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 |`rrm_arrow_shot_max`|`1.0`|Max arrow shot chance|
 |`rrm_grenade_shot_min`|`0.1`|Min grenade shot chance|
 |`rrm_grenade_shot_max`|`1.0`|Max grenade shot chance|
+|`rrm_energy_ball_shot_min`|`0.1`|Min energy ball shot chance|
+|`rrm_energy_ball_shot_max`|`1.0`|Max energy ball shot chance|
+|`rrm_mangler_shot_min`|`0.1`|Min mangler shot chance|
+|`rrm_mangler_shot_max`|`1.0`|Max mangler shot chance|
 |`rrm_grenade_rain_min`|`0.1`|Min grenade rain chance|
 |`rrm_grenade_rain_max`|`1.0`|Max grenade rain chance|
 |`rrm_grenade_rain_interval`|`3.0`|Seconds between grenade rain checks|
@@ -94,6 +98,10 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 |`rrm_rocket_rain_max`|`1.0`|Max rocket rain chance|
 |`rrm_rocket_rain_interval`|`3.0`|Seconds between rocket rain checks|
 |`rrm_rocket_rain_count`|`3`|Rockets spawned per trigger|
+|`rrm_fireball_rain_min`|`0.1`|Min fireball rain chance|
+|`rrm_fireball_rain_max`|`1.0`|Max fireball rain chance|
+|`rrm_fireball_rain_interval`|`3.0`|Seconds between fireball rain checks|
+|`rrm_fireball_rain_count`|`3`|Fireballs spawned per trigger|
 |`rrm_crit_collect_duration`|`5.0`|Crit duration on collect|
 |`rrm_uber_kill_min`|`0.1`|Min uber on kill chance|
 |`rrm_uber_kill_max`|`1.0`|Max uber on kill chance|
