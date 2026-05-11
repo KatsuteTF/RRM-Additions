@@ -31,7 +31,7 @@ public void OnPluginStart()
 {
     cMin      = CreateConVar("rrm_rain_grenade_min",      "0.1", "Minimum value for the random number generator.");
     cMax      = CreateConVar("rrm_rain_grenade_max",      "1.0", "Maximum value for the random number generator.");
-    cInterval = CreateConVar("rrm_rain_grenade_interval", "3.0", "Seconds between grenade rain checks.");
+    cInterval = CreateConVar("rrm_rain_grenade_interval", "5.0", "Seconds between grenade rain checks.");
 
     cMin.AddChangeHook(OnConvarChanged);
     cMax.AddChangeHook(OnConvarChanged);

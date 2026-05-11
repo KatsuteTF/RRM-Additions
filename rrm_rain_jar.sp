@@ -131,10 +131,12 @@ void SpawnJarAbove(int client)
     vel[2] = -600.0;
 
     char classname[32];
-    if(GetURandomInt() % 2 == 0)
-        strcopy(classname, sizeof(classname), "tf_projectile_jar");
-    else
-        strcopy(classname, sizeof(classname), "tf_projectile_jar_milk");
+    switch(GetURandomInt() % 3)
+    {
+        case 0: strcopy(classname, sizeof(classname), "tf_projectile_jar");
+        case 1: strcopy(classname, sizeof(classname), "tf_projectile_jar_milk");
+        case 2: strcopy(classname, sizeof(classname), "tf_projectile_jar_gas");
+    }
 
     int jar = CreateEntityByName(classname);
     if(jar == -1)
