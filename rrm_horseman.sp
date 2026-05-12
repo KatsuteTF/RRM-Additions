@@ -15,8 +15,9 @@
 
 int gEnabled = 0;
 float gChance = 0.0;
-ConVar cMin = null, cMax = null, cDuration = null;
-float gMin = 0.0, gMax = 0.0, gDuration = 0.0;
+ConVar cMin = null, cMax = null, cHealth = null;
+float gMin = 0.0, gMax = 0.0;
+int gHealth = 0;
 
 public Plugin myinfo =
 {
@@ -28,17 +29,17 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
-    cMin      = CreateConVar("rrm_horseman_min",      "0.1",  "Minimum value for the random number generator.");
-    cMax      = CreateConVar("rrm_horseman_max",      "1.0",  "Maximum value for the random number generator.");
-    cDuration = CreateConVar("rrm_horseman_duration", "30.0", "Duration for the horseman to exist.");
+    cMin    = CreateConVar("rrm_horseman_min",    "0.1",  "Minimum value for the random number generator.");
+    cMax    = CreateConVar("rrm_horseman_max",    "1.0",  "Maximum value for the random number generator.");
+    cHealth = CreateConVar("rrm_horseman_health", "1000", "Health for the horseman.");
 
     cMin.AddChangeHook(OnConvarChanged);
     cMax.AddChangeHook(OnConvarChanged);
-    cDuration.AddChangeHook(OnConvarChanged);
+    cHealth.AddChangeHook(OnConvarChanged);
 
-    gMin      = cMin.FloatValue;
-    gMax      = cMax.FloatValue;
-    gDuration = cDuration.FloatValue;
+    gMin    = cMin.FloatValue;
+    gMax    = cMax.FloatValue;
+    gHealth = cHealth.IntValue;
 
     if(RRM_IsRegOpen())
         RegisterModifiers();
@@ -69,8 +70,8 @@ public void OnConvarChanged(Handle convar, char[] oldValue, char[] newValue)
         gMin = fNewValue;
     else if(convar == cMax)
         gMax = fNewValue;
-    else if(convar == cDuration)
-        gDuration = fNewValue;
+    else if(convar == cHealth)
+        gHealth = RoundToNearest(fNewValue);
 }
 
 public int RRM_Callback_Horseman(bool enable, float value)
@@ -115,16 +116,9 @@ public void OnPlayerDeath(const Handle event, const char[] name, const bool dont
         TeleportEntity(ent, origin, angles, NULL_VECTOR);
         ActivateEntity(ent);
 
-        CreateTimer(gDuration, OnHorsemanDuration, EntIndexToEntRef(ent), TIMER_FLAG_NO_MAPCHANGE);
+        SetEntProp(ent, Prop_Data, "m_iHealth", gHealth);
+        SetEntProp(ent, Prop_Data, "m_iMaxHealth", gHealth);
     }
-}
-
-public Action OnHorsemanDuration(const Handle timer, const int entref)
-{
-    int ent = EntRefToEntIndex(entref);
-    if(ent != INVALID_ENT_REFERENCE && IsValidEntity(ent))
-        AcceptEntityInput(ent, "Kill");
-    return Plugin_Continue;
 }
 
 float RandomFloat(const float min = 0.0, const float max = 1.0){
