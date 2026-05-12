@@ -84,7 +84,6 @@ public Action TF2_CalcIsAttackCritical(int client, int weapon, char[] weaponname
     if (!(1 <= client <= MaxClients) || !IsClientInGame(client) || !IsPlayerAlive(client))
         return Plugin_Continue;
 
-    // Random chance to replace the shot with an arrow
     if (gChance > RandomFloat(0.0, 1.0))
         SpawnGrenade(client);
 

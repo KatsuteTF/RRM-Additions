@@ -36,6 +36,9 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 |`rrm_fire_duration`|`3.0`|Fire duration|
 |`rrm_friction_min`|`0.1`|Min friction|
 |`rrm_friction_max`|`1.0`|Max friction|
+|`rrm_horsemann_min`|`0.05`|Min Headless Horsemann chance|
+|`rrm_horsemann_max`|`0.2`|Max Headless Horsemann chance|
+|`rrm_horsemann_health`|`400`|Headless Horsemann health|
 |`rrm_jarate_min`|`0.1`|Min jarate chance|
 |`rrm_jarate_max`|`1.0`|Max jarate chance|
 |`rrm_jarate_duration`|`3.0`|Jarate duration|
@@ -48,12 +51,14 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 |`rrm_mini_sentry_min`|`0.1`|Min mini sentry chance|
 |`rrm_mini_sentry_max`|`1.0`|Max mini sentry chance|
 |`rrm_mini_sentry_duration`|`30.0`|Mini sentry duration|
+|`rrm_monoculus_min`|`0.05`|Min Monoculus chance|
+|`rrm_monoculus_max`|`0.2`|Max Monoculus chance|
 |`rrm_rain_jar_min`|`0.1`|Min jar chance|
-|`rrm_rain_jar_max`|`1.0`|Max jar chance|
+|`rrm_rain_jar_max`|`0.5`|Max jar chance|
 |`rrm_rain_jar_interval`|`10.0`|Seconds between jars|
 |`rrm_rain_grenade_min`|`0.1`|Min grenade chance|
-|`rrm_rain_grenade_max`|`1.0`|Max grenade chance|
-|`rrm_rain_grenade_interval`|`3.0`|Seconds between grenades|
+|`rrm_rain_grenade_max`|`0.5`|Max grenade chance|
+|`rrm_rain_grenade_interval`|`10.0`|Seconds between grenades|
 |`rrm_sentry_min`|`0.1`|Min sentry chance|
 |`rrm_sentry_max`|`1.0`|Max sentry chance|
 |`rrm_sentry_duration`|`30.0`|Sentry duration|

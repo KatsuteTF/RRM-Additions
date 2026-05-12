@@ -30,7 +30,7 @@ public Plugin myinfo =
 public void OnPluginStart()
 {
     cMin      = CreateConVar("rrm_rain_jar_min",      "0.1", "Minimum value for the random number generator.");
-    cMax      = CreateConVar("rrm_rain_jar_max",      "1.0", "Maximum value for the random number generator.");
+    cMax      = CreateConVar("rrm_rain_jar_max",      "0.5", "Maximum value for the random number generator.");
     cInterval = CreateConVar("rrm_rain_jar_interval", "10.0", "Seconds between jar rain checks.");
 
     cMin.AddChangeHook(OnConvarChanged);
