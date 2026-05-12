@@ -18,6 +18,7 @@ float gChance = 0.0;
 ConVar cMin = null, cMax = null, cHealth = null;
 float gMin = 0.0, gMax = 0.0;
 int gHealth = 0;
+ArrayList gSpawned = null;
 
 public Plugin myinfo =
 {
@@ -40,6 +41,8 @@ public void OnPluginStart()
     gMin    = cMin.FloatValue;
     gMax    = cMax.FloatValue;
     gHealth = cHealth.IntValue;
+
+    gSpawned = new ArrayList();
 
     if(RRM_IsRegOpen())
         RegisterModifiers();
@@ -79,6 +82,16 @@ public int RRM_Callback_Monoculus(bool enable, float value)
     gEnabled = enable;
     if(gEnabled)
         gChance = value;
+    else
+    {
+        for(int i = gSpawned.Length - 1; i >= 0; i--)
+        {
+            int ent = EntRefToEntIndex(gSpawned.Get(i));
+            if(ent != INVALID_ENT_REFERENCE && IsValidEntity(ent))
+                AcceptEntityInput(ent, "Kill");
+        }
+        gSpawned.Clear();
+    }
     return gEnabled;
 }
 
@@ -115,6 +128,8 @@ public void OnPlayerDeath(const Handle event, const char[] name, const bool dont
 
         SetEntProp(ent, Prop_Data, "m_iHealth", gHealth);
         SetEntProp(ent, Prop_Data, "m_iMaxHealth", gHealth);
+
+        gSpawned.Push(EntIndexToEntRef(ent));
     }
 }
 
