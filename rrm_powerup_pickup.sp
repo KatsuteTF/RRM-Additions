@@ -83,7 +83,14 @@ public int RRM_Callback_PowerupCollect(bool enable, float value)
 }
 
 public void OnItemPickup(const Event event, const char[] name, const bool dontBroadcast){
-    ApplyPowerup(GetClientOfUserId(GetEventInt(event, "userid")));
+    if(!gEnabled)
+        return;
+
+    int client = GetClientOfUserId(GetEventInt(event, "userid"));
+    if(!(1 <= client <= MaxClients) || !IsClientInGame(client) || !IsPlayerAlive(client))
+        return;
+
+    ApplyPowerup(client);
 }
 
 public void OnEntityCreated(int ent, const char[] classname)

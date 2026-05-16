@@ -70,5 +70,12 @@ public int RRM_Callback_CritCollect(bool enable, float value)
 }
 
 public void OnItemPickup(const Event event, const char[] name, const bool dontBroadcast){
-    TF2_AddCondition(GetClientOfUserId(GetEventInt(event, "userid")), TFCond_Kritzkrieged, gDuration);
+    if(!gEnabled)
+        return;
+
+    int client = GetClientOfUserId(GetEventInt(event, "userid"));
+    if(!(1 <= client <= MaxClients) || !IsClientInGame(client) || !IsPlayerAlive(client))
+        return;
+
+    TF2_AddCondition(client, TFCond_Kritzkrieged, gDuration);
 }
