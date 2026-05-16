@@ -97,7 +97,7 @@ public Action OnTakeDamage(int victim, int &attacker, int &inflictor, float &dam
     if(!gEnabled)
         return Plugin_Continue;
 
-    if(gChance > RandomFloat(RandomFloat(0.0, 1.0)))
+    if(gChance > RandomFloat(0.0, 1.0))
     {
         if(!(1 <= victim <= MaxClients))
             return Plugin_Continue;

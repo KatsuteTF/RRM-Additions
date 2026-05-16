@@ -91,7 +91,7 @@ public void OnPlayerDeath(const Handle event, const char[] name, const bool dont
     if(!(1 <= attacker <= MaxClients) || !IsClientInGame(attacker) || !IsPlayerAlive(attacker))
         return;
 
-    if(gChance > RandomFloat(RandomFloat(0.0, 1.0)))
+    if(gChance > RandomFloat(0.0, 1.0))
     {
         float origin[3];
         GetClientAbsOrigin(client, origin);

@@ -106,7 +106,7 @@ public Action TimerTick(Handle timer)
     {
         if(!IsClientInGame(i) || !IsPlayerAlive(i))
             continue;
-        if(gChance > RandomFloat(RandomFloat(0.0, 1.0)))
+        if(gChance > RandomFloat(0.0, 1.0))
         {
             SpawnGrenadeAbove(i);
         }
