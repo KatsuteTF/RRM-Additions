@@ -36,9 +36,9 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 |`rrm_fire_duration`|`3.0`|Fire duration|
 |`rrm_friction_min`|`0.1`|Min friction|
 |`rrm_friction_max`|`1.0`|Max friction|
-|`rrm_horsemann_min`|`0.05`|Min Headless Horsemann chance|
-|`rrm_horsemann_max`|`0.2`|Max Headless Horsemann chance|
-|`rrm_horsemann_health`|`400`|Headless Horsemann health|
+|`rrm_headless_horsemann_min`|`0.05`|Min Headless Horsemann chance|
+|`rrm_headless_horsemann_max`|`0.2`|Max Headless Horsemann chance|
+|`rrm_headless_horsemann_health`|`400`|Headless Horsemann health|
 |`rrm_jarate_min`|`0.1`|Min jarate chance|
 |`rrm_jarate_max`|`1.0`|Max jarate chance|
 |`rrm_jarate_duration`|`3.0`|Jarate duration|
