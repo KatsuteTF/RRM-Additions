@@ -4,6 +4,15 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 
 |cvar|param|description|
 |---|:-:|---|
+|`rrm_damage_reflect_chance_min`|`0.1`|Min damage reflect chance|
+|`rrm_damage_reflect_chance_max`|`1.0`|Max damage reflect chance|
+|`rrm_damage_reflect_min`|`0.1`|Min damage reflect percentage|
+|`rrm_damage_reflect_max`|`1.0`|Max damage reflect percentage|
+|`rrm_healing_min`|`0.1`|Min healing multiplier|
+|`rrm_healing_max`|`3.0`|Max healing multiplier|
+|`rrm_infinite_ammo_delay`|`1.2`|Attribute delay|
+|`rrm_knockback_min`|`0.0`|Min knockback multiplier|
+|`rrm_knockback_max`|`5.0`|Max knockback multiplier|
 |`rrm_attribute_clip_min`|`0.5`|Min clip size|
 |`rrm_attribute_clip_max`|`4.0`|Max clip size|
 |`rrm_attribute_clip_delay`|`1.2`|Attribute delay|
