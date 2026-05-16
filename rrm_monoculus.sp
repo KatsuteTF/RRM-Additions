@@ -95,7 +95,7 @@ public void OnPlayerDeath(const Handle event, const char[] name, const bool dont
     GetClientAbsOrigin(client, origin);
     float angles[3] = {0.0, 0.0, 0.0};
 
-    if(gChance > RandomFloat(RandomFloat(0.0, 1.0)))
+    if(gChance > RandomFloat(0.0, 1.0))
     {
         int ent = CreateEntityByName("eyeball_boss");
         if(ent == -1)

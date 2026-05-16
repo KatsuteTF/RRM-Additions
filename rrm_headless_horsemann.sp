@@ -117,7 +117,7 @@ public void OnPlayerDeath(const Handle event, const char[] name, const bool dont
     angles[0] = 0.0;
     angles[2] = 0.0;
 
-    if(gChance > RandomFloat(RandomFloat(0.0, 1.0)))
+    if(gChance > RandomFloat(0.0, 1.0))
     {
         int ent = CreateEntityByName("headless_hatman");
         if(ent == -1)
