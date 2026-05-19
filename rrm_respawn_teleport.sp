@@ -14,7 +14,7 @@
 #pragma newdecls required
 
 int gEnabled = 0;
-int gRoundActive = 0;
+float gActivatedTime = -1.0;
 ConVar cCount = null;
 int gCount = 3;
 
@@ -35,8 +35,6 @@ public void OnPluginStart()
     gCount = cCount.IntValue;
 
     HookEvent("player_spawn", OnPlayerSpawn, EventHookMode_Post);
-    HookEvent("teamplay_round_start", OnRoundStart);
-    HookEvent("teamplay_round_active", OnRoundActive);
 
     if(RRM_IsRegOpen())
         RegisterModifiers();
@@ -66,24 +64,14 @@ public void OnConvarChanged(Handle convar, char[] oldValue, char[] newValue)
 public int RRM_Callback_SpawnTeleport(bool enable, float value)
 {
     gEnabled = enable;
+    if(enable)
+        gActivatedTime = GetGameTime();
     return gEnabled;
-}
-
-public Action OnRoundStart(Handle event, const char[] name, bool dontBroadcast)
-{
-    gRoundActive = 0;
-    return Plugin_Continue;
-}
-
-public Action OnRoundActive(Handle event, const char[] name, bool dontBroadcast)
-{
-    gRoundActive = 1;
-    return Plugin_Continue;
 }
 
 public Action OnPlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
 {
-    if(!gEnabled || !gRoundActive)
+    if(!gEnabled || gActivatedTime < 0.0 || GetGameTime() - gActivatedTime < 10.0)
         return Plugin_Continue;
 
     int client = GetClientOfUserId(GetEventInt(event, "userid"));
