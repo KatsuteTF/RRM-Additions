@@ -14,8 +14,6 @@
 #pragma newdecls required
 
 int gEnabled = 0;
-bool gCanTeleport = false;
-Handle gTeleportTimer = null;
 ConVar cCount = null;
 int gCount = 3;
 
@@ -36,8 +34,6 @@ public void OnPluginStart()
     gCount = cCount.IntValue;
 
     HookEvent("player_spawn", OnPlayerSpawn, EventHookMode_Post);
-    HookEvent("teamplay_round_start", OnRoundStart);
-    HookEvent("teamplay_round_active", OnRoundStart);
 
     if(RRM_IsRegOpen())
         RegisterModifiers();
@@ -70,28 +66,29 @@ public int RRM_Callback_SpawnTeleport(bool enable, float value)
     return gEnabled;
 }
 
-public Action OnRoundStart(Handle event, const char[] name, bool dontBroadcast)
+bool IsInRespawnRoom(int client)
 {
-    gCanTeleport = false;
-    if(gTeleportTimer != null)
-    {
-        KillTimer(gTeleportTimer);
-        gTeleportTimer = null;
-    }
-    gTeleportTimer = CreateTimer(10.0, Timer_EnableTeleport);
-    return Plugin_Continue;
-}
+    float pos[3];
+    GetClientAbsOrigin(client, pos);
 
-public Action Timer_EnableTeleport(Handle timer)
-{
-    gTeleportTimer = null;
-    gCanTeleport = true;
-    return Plugin_Stop;
+    int ent = -1;
+    while((ent = FindEntityByClassname(ent, "trigger_respawnroom")) != -1)
+    {
+        float mins[3], maxs[3];
+        GetEntPropVector(ent, Prop_Data, "m_vecAbsMin", mins);
+        GetEntPropVector(ent, Prop_Data, "m_vecAbsMax", maxs);
+
+        if(pos[0] >= mins[0] && pos[0] <= maxs[0] &&
+           pos[1] >= mins[1] && pos[1] <= maxs[1] &&
+           pos[2] >= mins[2] && pos[2] <= maxs[2])
+            return true;
+    }
+    return false;
 }
 
 public Action OnPlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
 {
-    if(!gEnabled || !gCanTeleport)
+    if(!gEnabled)
         return Plugin_Continue;
 
     int client = GetClientOfUserId(GetEventInt(event, "userid"));
@@ -103,7 +100,7 @@ public Action OnPlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
 
     int team = GetClientTeam(client);
 
-    // Collect all eligible teammates with their distances
+    // Collect all eligible teammates with their distances (skip those in respawn rooms)
     int candidates[MAXPLAYERS + 1];
     float candidateDists[MAXPLAYERS + 1];
     int candidateCount = 0;
@@ -115,6 +112,8 @@ public Action OnPlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
         if(!IsClientInGame(i) || !IsPlayerAlive(i))
             continue;
         if(GetClientTeam(i) != team)
+            continue;
+        if(IsInRespawnRoom(i))
             continue;
 
         float pos[3];
