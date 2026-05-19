@@ -15,6 +15,7 @@
 int gEnabled = 0;
 ConVar cCount = null;
 int gCount = 3;
+bool gDiedThisRound[MAXPLAYERS + 1];
 
 public Plugin myinfo =
 {
@@ -33,6 +34,8 @@ public void OnPluginStart()
     gCount = cCount.IntValue;
 
     HookEvent("player_spawn", OnPlayerSpawn, EventHookMode_Post);
+    HookEvent("player_death", OnPlayerDeath, EventHookMode_Post);
+    HookEvent("teamplay_round_start", OnRoundStart, EventHookMode_Post);
 
     if(RRM_IsRegOpen())
         RegisterModifiers();
@@ -65,6 +68,26 @@ public int RRM_Callback_SpawnTeleport(bool enable, float value)
     return gEnabled;
 }
 
+public void OnClientDisconnect(int client)
+{
+    gDiedThisRound[client] = false;
+}
+
+public Action OnRoundStart(Handle event, const char[] name, bool dontBroadcast)
+{
+    for(int i = 1; i <= MaxClients; i++)
+        gDiedThisRound[i] = false;
+    return Plugin_Continue;
+}
+
+public Action OnPlayerDeath(Handle event, const char[] name, bool dontBroadcast)
+{
+    int client = GetClientOfUserId(GetEventInt(event, "userid"));
+    if(1 <= client <= MaxClients)
+        gDiedThisRound[client] = true;
+    return Plugin_Continue;
+}
+
 bool IsInRespawnRoom(int client)
 {
     float pos[3];
@@ -94,6 +117,10 @@ public Action OnPlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
     int client = GetClientOfUserId(GetEventInt(event, "userid"));
     if(!(1 <= client <= MaxClients) || !IsClientInGame(client))
         return Plugin_Continue;
+
+    if(!gDiedThisRound[client])
+        return Plugin_Continue;
+    gDiedThisRound[client] = false;
 
     float spawnPos[3];
     GetClientAbsOrigin(client, spawnPos);
