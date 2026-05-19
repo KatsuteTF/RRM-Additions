@@ -28,7 +28,7 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
-    cCount = CreateConVar("rrm_spawn_teleport_count", "3", "Number of furthest teammates to randomly select from.");
+    cCount = CreateConVar("rrm_respawn_teleport_count", "3", "Number of furthest teammates to randomly select from.");
 
     cCount.AddChangeHook(OnConvarChanged);
 
