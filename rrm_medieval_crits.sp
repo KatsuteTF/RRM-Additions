@@ -14,6 +14,7 @@
 #pragma newdecls required
 
 int gEnabled = 0;
+Handle gTimer = null;
 
 public Plugin myinfo =
 {
@@ -25,8 +26,6 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
-    HookEvent("post_inventory_application", PostInventoryApplication);
-
     if(RRM_IsRegOpen())
         RegisterModifiers();
 
@@ -54,7 +53,14 @@ public int RRM_Callback_MedievalCrits(bool enable, float value)
     if(gEnabled)
         EnableMedieval();
     else
+    {
         DisableMedieval();
+        if(gTimer != null)
+        {
+            KillTimer(gTimer);
+            gTimer = null;
+        }
+    }
     return enable;
 }
 
@@ -71,6 +77,9 @@ void EnableMedieval()
                 TF2_AddCondition(i, TFCond_Kritzkrieged, TFCondDuration_Infinite);
         }
     }
+    if(gTimer != null)
+        KillTimer(gTimer);
+    gTimer = CreateTimer(1.0, TimerTick, _, TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE);
 }
 
 void DisableMedieval()
@@ -88,14 +97,13 @@ void DisableMedieval()
     }
 }
 
-public void PostInventoryApplication(const Handle event, const char[] name, const bool dontBroadcast)
+public Action TimerTick(Handle timer)
 {
-    if(!gEnabled)
-        return;
-
-    int client = GetClientOfUserId(GetEventInt(event, "userid"));
-    if(!(1 <= client <= MaxClients) || !IsClientInGame(client))
-        return;
-
-    TF2_AddCondition(client, TFCond_Kritzkrieged, TFCondDuration_Infinite);
+    for(int i = 1; i <= MaxClients; i++){
+        if(!IsClientInGame(i) || !IsPlayerAlive(i))
+            continue;
+        if(!TF2_IsPlayerInCondition(i, TFCond_Kritzkrieged))
+            TF2_AddCondition(i, TFCond_Kritzkrieged, TFCondDuration_Infinite);
+    }
+    return Plugin_Continue;
 }
