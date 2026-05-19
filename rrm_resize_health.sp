@@ -73,7 +73,7 @@ public int RRM_Callback_HealthSize(bool enable, float value)
     {
         UpdateSize();
         if(gTimer == null)
-            gTimer = CreateTimer(0.1, Timer_UpdateSize, _, TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE);
+            gTimer = CreateTimer(0.5, Timer_UpdateSize, _, TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE);
     }
     else
     {
