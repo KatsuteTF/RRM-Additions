@@ -41,7 +41,7 @@ public void OnPluginStart()
     if(RRM_IsRegOpen())
         RegisterModifiers();
 
-    AutoExecConfig(true, "rrm_spawn_teleport", "rrm");
+    AutoExecConfig(true, "rrm_respawn_teleport", "rrm");
 }
 
 public int RRM_OnRegOpen()
