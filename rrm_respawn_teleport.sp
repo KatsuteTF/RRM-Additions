@@ -14,7 +14,8 @@
 #pragma newdecls required
 
 int gEnabled = 0;
-float gRoundStartTime = -1.0;
+bool gCanTeleport = false;
+Handle gTeleportTimer = null;
 ConVar cCount = null;
 int gCount = 3;
 
@@ -70,13 +71,26 @@ public int RRM_Callback_SpawnTeleport(bool enable, float value)
 
 public Action OnRoundStart(Handle event, const char[] name, bool dontBroadcast)
 {
-    gRoundStartTime = GetGameTime();
+    gCanTeleport = false;
+    if(gTeleportTimer != null)
+    {
+        KillTimer(gTeleportTimer);
+        gTeleportTimer = null;
+    }
+    gTeleportTimer = CreateTimer(10.0, Timer_EnableTeleport);
     return Plugin_Continue;
+}
+
+public Action Timer_EnableTeleport(Handle timer)
+{
+    gTeleportTimer = null;
+    gCanTeleport = true;
+    return Plugin_Stop;
 }
 
 public Action OnPlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
 {
-    if(!gEnabled || gRoundStartTime < 0.0 || GetGameTime() - gRoundStartTime < 10.0)
+    if(!gEnabled || !gCanTeleport)
         return Plugin_Continue;
 
     int client = GetClientOfUserId(GetEventInt(event, "userid"));
