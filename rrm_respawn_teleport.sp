@@ -16,6 +16,7 @@
 int gEnabled = 0;
 ConVar cCount = null;
 int gCount = 3;
+bool gInRespawnRoom[MAXPLAYERS + 1];
 
 public Plugin myinfo =
 {
@@ -39,6 +40,42 @@ public void OnPluginStart()
         RegisterModifiers();
 
     AutoExecConfig(true, "rrm_respawn_teleport", "rrm");
+}
+
+public void OnMapStart()
+{
+    int ent = -1;
+    while((ent = FindEntityByClassname(ent, "func_respawnroom")) != -1)
+        HookRespawnRoom(ent);
+}
+
+public void OnEntityCreated(int entity, const char[] classname)
+{
+    if(StrEqual(classname, "func_respawnroom", true))
+        HookRespawnRoom(entity);
+}
+
+void HookRespawnRoom(int ent)
+{
+    SDKHook(ent, SDKHook_StartTouchPost, OnRespawnRoomStartTouch);
+    SDKHook(ent, SDKHook_EndTouchPost, OnRespawnRoomEndTouch);
+}
+
+public void OnRespawnRoomStartTouch(int ent, int other)
+{
+    if(1 <= other <= MaxClients)
+        gInRespawnRoom[other] = true;
+}
+
+public void OnRespawnRoomEndTouch(int ent, int other)
+{
+    if(1 <= other <= MaxClients)
+        gInRespawnRoom[other] = false;
+}
+
+public void OnClientDisconnect(int client)
+{
+    gInRespawnRoom[client] = false;
 }
 
 public int RRM_OnRegOpen()
@@ -68,22 +105,7 @@ public int RRM_Callback_SpawnTeleport(bool enable, float value)
 
 bool IsInRespawnRoom(int client)
 {
-    float pos[3];
-    GetClientAbsOrigin(client, pos);
-
-    int ent = -1;
-    while((ent = FindEntityByClassname(ent, "func_respawnroom")) != -1)
-    {
-        float mins[3], maxs[3];
-        GetEntPropVector(ent, Prop_Data, "m_vecAbsMin", mins);
-        GetEntPropVector(ent, Prop_Data, "m_vecAbsMax", maxs);
-
-        if(pos[0] >= mins[0] && pos[0] <= maxs[0] &&
-           pos[1] >= mins[1] && pos[1] <= maxs[1] &&
-           pos[2] >= mins[2] && pos[2] <= maxs[2])
-            return true;
-    }
-    return false;
+    return gInRespawnRoom[client];
 }
 
 public Action OnPlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
