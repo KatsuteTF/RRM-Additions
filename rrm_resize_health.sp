@@ -14,8 +14,8 @@
 #pragma newdecls required
 
 int gEnabled = 0;
-ConVar cMin = null;
-float gMin = 0.0;
+ConVar cMin = null, cMax = null;
+float gMin = 0.0, gMax = 0.0;
 Handle gTimer = null;
 
 public Plugin myinfo =
@@ -29,10 +29,13 @@ public Plugin myinfo =
 public void OnPluginStart()
 {
     cMin = CreateConVar("rrm_size_health_min", "0.25", "Minimum size when at 0% health.");
+    cMax = CreateConVar("rrm_size_health_max", "1.35", "Maximum size when overhealed.");
 
     cMin.AddChangeHook(OnConvarChanged);
+    cMax.AddChangeHook(OnConvarChanged);
 
     gMin = cMin.FloatValue;
+    gMax = cMax.FloatValue;
 
     HookEvent("player_spawn", OnPlayerSpawn, EventHookMode_Post);
 
@@ -63,7 +66,10 @@ public void OnConvarChanged(Handle convar, char[] oldValue, char[] newValue)
     if(StrEqual(oldValue, newValue, true))
         return;
 
-    gMin = StringToFloat(newValue);
+    if(convar == cMin)
+        gMin = StringToFloat(newValue);
+    else if(convar == cMax)
+        gMax = StringToFloat(newValue);
 }
 
 public int RRM_Callback_HealthSize(bool enable, float value)
@@ -129,9 +135,9 @@ void SetPlayerSize(int client)
     if(maxHealth <= 0)
         return;
     float pct = float(GetClientHealth(client)) / float(maxHealth);
-    if(pct > 1.0) pct = 1.0;
     if(pct < 0.0) pct = 0.0;
     float newSize = gMin + (1.0 - gMin) * pct;
+    if(newSize > gMax) newSize = gMax;
 
     float currentSize = GetEntPropFloat(client, Prop_Send, "m_flModelScale");
 
