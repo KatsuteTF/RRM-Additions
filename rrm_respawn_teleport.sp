@@ -15,7 +15,7 @@
 int gEnabled = 0;
 ConVar cCount = null;
 int gCount = 3;
-bool gDiedThisRound[MAXPLAYERS + 1];
+bool gAnyDeathThisRound = false;
 
 public Plugin myinfo =
 {
@@ -68,45 +68,16 @@ public int RRM_Callback_SpawnTeleport(bool enable, float value)
     return gEnabled;
 }
 
-public void OnClientDisconnect(int client)
-{
-    gDiedThisRound[client] = false;
-}
-
 public Action OnRoundStart(Handle event, const char[] name, bool dontBroadcast)
 {
-    for(int i = 1; i <= MaxClients; i++)
-        gDiedThisRound[i] = false;
+    gAnyDeathThisRound = false;
     return Plugin_Continue;
 }
 
 public Action OnPlayerDeath(Handle event, const char[] name, bool dontBroadcast)
 {
-    int client = GetClientOfUserId(GetEventInt(event, "userid"));
-    if(1 <= client <= MaxClients)
-        gDiedThisRound[client] = true;
+    gAnyDeathThisRound = true;
     return Plugin_Continue;
-}
-
-bool IsInRespawnRoom(int client)
-{
-    float pos[3];
-    GetClientAbsOrigin(client, pos);
-
-    int ent = -1;
-    while((ent = FindEntityByClassname(ent, "func_respawnroom")) != -1)
-    {
-        float origin[3], mins[3], maxs[3];
-        GetEntPropVector(ent, Prop_Data, "m_vecAbsOrigin", origin);
-        GetEntPropVector(ent, Prop_Data, "m_vecMins", mins);
-        GetEntPropVector(ent, Prop_Data, "m_vecMaxs", maxs);
-
-        if(pos[0] >= origin[0] + mins[0] && pos[0] <= origin[0] + maxs[0] &&
-           pos[1] >= origin[1] + mins[1] && pos[1] <= origin[1] + maxs[1] &&
-           pos[2] >= origin[2] + mins[2] && pos[2] <= origin[2] + maxs[2])
-            return true;
-    }
-    return false;
 }
 
 public Action OnPlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
@@ -114,20 +85,19 @@ public Action OnPlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
     if(!gEnabled)
         return Plugin_Continue;
 
+    if(!gAnyDeathThisRound)
+        return Plugin_Continue;
+
     int client = GetClientOfUserId(GetEventInt(event, "userid"));
     if(!(1 <= client <= MaxClients) || !IsClientInGame(client))
         return Plugin_Continue;
-
-    if(!gDiedThisRound[client])
-        return Plugin_Continue;
-    gDiedThisRound[client] = false;
 
     float spawnPos[3];
     GetClientAbsOrigin(client, spawnPos);
 
     int team = GetClientTeam(client);
 
-    // Collect all eligible teammates with their distances (skip those in respawn rooms)
+    // Collect all eligible teammates with their distances
     int candidates[MAXPLAYERS + 1];
     float candidateDists[MAXPLAYERS + 1];
     int candidateCount = 0;
@@ -139,8 +109,6 @@ public Action OnPlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
         if(!IsClientInGame(i) || !IsPlayerAlive(i))
             continue;
         if(GetClientTeam(i) != team)
-            continue;
-        if(IsInRespawnRoom(i))
             continue;
 
         float pos[3];
