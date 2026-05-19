@@ -37,6 +37,7 @@ public void OnPluginStart()
 
     HookEvent("player_spawn", OnPlayerSpawn, EventHookMode_Post);
     HookEvent("teamplay_round_start", OnRoundStart);
+    HookEvent("teamplay_round_active", OnRoundStart);
 
     if(RRM_IsRegOpen())
         RegisterModifiers();
