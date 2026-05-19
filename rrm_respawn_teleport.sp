@@ -15,6 +15,7 @@
 int gEnabled = 0;
 ConVar cCount = null;
 int gCount = 3;
+bool gRoundActive = false;
 bool gAnyDeathThisRound = false;
 
 public Plugin myinfo =
@@ -36,6 +37,8 @@ public void OnPluginStart()
     HookEvent("player_spawn", OnPlayerSpawn, EventHookMode_Post);
     HookEvent("player_death", OnPlayerDeath, EventHookMode_Post);
     HookEvent("teamplay_round_start", OnRoundStart, EventHookMode_Post);
+    HookEvent("teamplay_round_active", OnRoundActive, EventHookMode_Post);
+    HookEvent("teamplay_round_win", OnRoundEnd, EventHookMode_Post);
 
     if(RRM_IsRegOpen())
         RegisterModifiers();
@@ -70,13 +73,28 @@ public int RRM_Callback_SpawnTeleport(bool enable, float value)
 
 public Action OnRoundStart(Handle event, const char[] name, bool dontBroadcast)
 {
+    gRoundActive = false;
+    gAnyDeathThisRound = false;
+    return Plugin_Continue;
+}
+
+public Action OnRoundActive(Handle event, const char[] name, bool dontBroadcast)
+{
+    gRoundActive = true;
+    return Plugin_Continue;
+}
+
+public Action OnRoundEnd(Handle event, const char[] name, bool dontBroadcast)
+{
+    gRoundActive = false;
     gAnyDeathThisRound = false;
     return Plugin_Continue;
 }
 
 public Action OnPlayerDeath(Handle event, const char[] name, bool dontBroadcast)
 {
-    gAnyDeathThisRound = true;
+    if(gRoundActive)
+        gAnyDeathThisRound = true;
     return Plugin_Continue;
 }
 
