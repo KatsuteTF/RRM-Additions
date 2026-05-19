@@ -72,7 +72,7 @@ bool IsInRespawnRoom(int client)
     GetClientAbsOrigin(client, pos);
 
     int ent = -1;
-    while((ent = FindEntityByClassname(ent, "trigger_respawnroom")) != -1)
+    while((ent = FindEntityByClassname(ent, "func_respawnroom")) != -1)
     {
         float mins[3], maxs[3];
         GetEntPropVector(ent, Prop_Data, "m_vecAbsMin", mins);
