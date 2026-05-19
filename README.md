@@ -76,6 +76,7 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 |`rrm_stun_min`|`0.1`|Min stun chance|
 |`rrm_stun_max`|`1.0`|Max stun chance|
 |`rrm_stun_duration`|`3.0`|Stun duration|
+|`rrm_spawn_teleport_count`|`3`|Number of furthest teammates to randomly select from|
 |`rrm_swap_min`|`0.1`|Min swap chance|
 |`rrm_swap_max`|`1.0`|Max swap chance|
 |`rrm_taunt_min`|`0.1`|Min taunt chance|

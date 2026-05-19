@@ -14,18 +14,29 @@
 #pragma newdecls required
 
 int gEnabled = 0;
+int gRoundActive = 0;
+ConVar cCount = null;
+int gCount = 3;
 
 public Plugin myinfo =
 {
     name = "[RRM] Respawn Teleport Modifier",
     author = "Katsute",
-    description = "Modifier that teleports players to the furthest alive teammate from spawn on respawn.",
+    description = "Modifier that teleports players to a random furthest alive teammate from spawn on respawn.",
     version = "1.0"
 };
 
 public void OnPluginStart()
 {
+    cCount = CreateConVar("rrm_spawn_teleport_count", "3", "Number of furthest teammates to randomly select from.");
+
+    cCount.AddChangeHook(OnConvarChanged);
+
+    gCount = cCount.IntValue;
+
     HookEvent("player_spawn", OnPlayerSpawn, EventHookMode_Post);
+    HookEvent("teamplay_round_start", OnRoundStart);
+    HookEvent("teamplay_round_active", OnRoundActive);
 
     if(RRM_IsRegOpen())
         RegisterModifiers();
@@ -43,15 +54,36 @@ void RegisterModifiers()
     RRM_Register("Respawn Teleport", 0.0, 0.0, false, RRM_Callback_SpawnTeleport);
 }
 
+public void OnConvarChanged(Handle convar, char[] oldValue, char[] newValue)
+{
+    if(StrEqual(oldValue, newValue, true))
+        return;
+
+    if(convar == cCount)
+        gCount = StringToInt(newValue);
+}
+
 public int RRM_Callback_SpawnTeleport(bool enable, float value)
 {
     gEnabled = enable;
     return gEnabled;
 }
 
+public Action OnRoundStart(Handle event, const char[] name, bool dontBroadcast)
+{
+    gRoundActive = 0;
+    return Plugin_Continue;
+}
+
+public Action OnRoundActive(Handle event, const char[] name, bool dontBroadcast)
+{
+    gRoundActive = 1;
+    return Plugin_Continue;
+}
+
 public Action OnPlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
 {
-    if(!gEnabled)
+    if(!gEnabled || !gRoundActive)
         return Plugin_Continue;
 
     int client = GetClientOfUserId(GetEventInt(event, "userid"));
@@ -63,8 +95,10 @@ public Action OnPlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
 
     int team = GetClientTeam(client);
 
-    int furthest = -1;
-    float furthestDist = -1.0;
+    // Collect all eligible teammates with their distances
+    int candidates[MAXPLAYERS + 1];
+    float candidateDists[MAXPLAYERS + 1];
+    int candidateCount = 0;
 
     for(int i = 1; i <= MaxClients; i++)
     {
@@ -78,19 +112,38 @@ public Action OnPlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
         float pos[3];
         GetClientAbsOrigin(i, pos);
 
-        float dist = GetVectorDistance(spawnPos, pos);
-        if(dist > furthestDist)
+        candidates[candidateCount] = i;
+        candidateDists[candidateCount] = GetVectorDistance(spawnPos, pos);
+        candidateCount++;
+    }
+
+    if(candidateCount == 0)
+        return Plugin_Continue;
+
+    // Sort descending by distance (furthest first)
+    for(int i = 0; i < candidateCount - 1; i++)
+    {
+        for(int j = 0; j < candidateCount - i - 1; j++)
         {
-            furthestDist = dist;
-            furthest = i;
+            if(candidateDists[j] < candidateDists[j + 1])
+            {
+                float tmpF = candidateDists[j];
+                candidateDists[j] = candidateDists[j + 1];
+                candidateDists[j + 1] = tmpF;
+
+                int tmpI = candidates[j];
+                candidates[j] = candidates[j + 1];
+                candidates[j + 1] = tmpI;
+            }
         }
     }
 
-    if(furthest == -1)
-        return Plugin_Continue;
+    // Pick randomly from top min(gCount, candidateCount) furthest players
+    int pool = (gCount < candidateCount) ? gCount : candidateCount;
+    int chosen = candidates[GetURandomInt() % pool];
 
     float targetPos[3];
-    GetClientAbsOrigin(furthest, targetPos);
+    GetClientAbsOrigin(chosen, targetPos);
     TeleportEntity(client, targetPos, NULL_VECTOR, NULL_VECTOR);
 
     return Plugin_Continue;
