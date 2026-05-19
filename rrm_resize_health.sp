@@ -131,7 +131,54 @@ void SetPlayerSize(int client)
     float pct = float(GetClientHealth(client)) / float(maxHealth);
     if(pct > 1.0) pct = 1.0;
     if(pct < 0.0) pct = 0.0;
-    SetEntPropFloat(client, Prop_Send, "m_flModelScale", gMin + (1.0 - gMin) * pct);
+    float newSize = gMin + (1.0 - gMin) * pct;
+
+    float currentSize = GetEntPropFloat(client, Prop_Send, "m_flModelScale");
+
+    // When growing, verify the larger hull fits before applying
+    if(newSize > currentSize)
+    {
+        float origin[3];
+        GetClientAbsOrigin(client, origin);
+
+        // TF2 standing hull scaled to new size; Z min is always 0 (hull anchored at feet)
+        float mins[3], maxs[3];
+        mins[0] = -24.0 * newSize;
+        mins[1] = -24.0 * newSize;
+        mins[2] = 0.0;
+        maxs[0] = 24.0 * newSize;
+        maxs[1] = 24.0 * newSize;
+        maxs[2] = 82.0 * newSize;
+
+        TR_TraceHullFilter(origin, origin, mins, maxs, MASK_PLAYERSOLID, TraceFilter_IgnoreClient, client);
+
+        if(TR_DidHit())
+        {
+            // Try lifting the player by the extra height so ground-level
+            // geometry (slopes, steps) no longer blocks the wider hull
+            float liftedOrigin[3];
+            liftedOrigin[0] = origin[0];
+            liftedOrigin[1] = origin[1];
+            liftedOrigin[2] = origin[2] + 82.0 * (newSize - currentSize);
+
+            TR_TraceHullFilter(liftedOrigin, liftedOrigin, mins, maxs, MASK_PLAYERSOLID, TraceFilter_IgnoreClient, client);
+
+            if(!TR_DidHit())
+            {
+                TeleportEntity(client, liftedOrigin, NULL_VECTOR, NULL_VECTOR);
+                SetEntPropFloat(client, Prop_Send, "m_flModelScale", newSize);
+            }
+            // Still blocked (e.g. ceiling) — skip resize this tick
+            return;
+        }
+    }
+
+    SetEntPropFloat(client, Prop_Send, "m_flModelScale", newSize);
+}
+
+public bool TraceFilter_IgnoreClient(int entity, int contentsMask, any data)
+{
+    return entity != data;
 }
 
 void RemoveSize()
