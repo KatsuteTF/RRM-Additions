@@ -19,12 +19,14 @@ public Plugin myinfo =
 {
     name = "[RRM] Medieval Crits Modifier",
     author = "Katsute",
-    description = "Modifier that sets game to medieval with 100% melee crit chance.",
+    description = "Modifier that sets game to medieval with 100% crit chance.",
     version = "1.0"
 };
 
 public void OnPluginStart()
 {
+    HookEvent("post_inventory_application", PostInventoryApplication);
+
     if(RRM_IsRegOpen())
         RegisterModifiers();
 
@@ -65,6 +67,8 @@ void EnableMedieval()
             TF2_RemoveAllWeapons(i);
             TF2_RegeneratePlayer(i);
             SetEntityHealth(i, health < 1 ? 1 : health);
+            if(IsPlayerAlive(i))
+                TF2_AddCondition(i, TFCond_Kritzkrieged, TFCondDuration_Infinite);
         }
     }
 }
@@ -74,6 +78,8 @@ void DisableMedieval()
     GameRules_SetProp("m_bPlayingMedieval", 0);
     for(int i = 1; i <= MaxClients; i++){
         if(IsClientInGame(i)){
+            if(TF2_IsPlayerInCondition(i, TFCond_Kritzkrieged))
+                TF2_RemoveCondition(i, TFCond_Kritzkrieged);
             int health = GetClientHealth(i);
             TF2_RemoveAllWeapons(i);
             TF2_RegeneratePlayer(i);
@@ -82,18 +88,14 @@ void DisableMedieval()
     }
 }
 
-public Action TF2_CalcIsAttackCritical(int client, int weapon, char[] weaponname, bool& result)
+public void PostInventoryApplication(const Handle event, const char[] name, const bool dontBroadcast)
 {
     if(!gEnabled)
-        return Plugin_Continue;
+        return;
 
-    if(!(1 <= client <= MaxClients) || !IsClientInGame(client) || !IsPlayerAlive(client))
-        return Plugin_Continue;
+    int client = GetClientOfUserId(GetEventInt(event, "userid"));
+    if(!(1 <= client <= MaxClients) || !IsClientInGame(client))
+        return;
 
-    if(weapon == GetPlayerWeaponSlot(client, 2)){
-        result = true;
-        return Plugin_Changed;
-    }
-
-    return Plugin_Continue;
+    TF2_AddCondition(client, TFCond_Kritzkrieged, TFCondDuration_Infinite);
 }
