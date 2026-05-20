@@ -22,7 +22,6 @@ float gChance = 0.0;
 ConVar cMin = null, cMax = null, cInterval = null;
 float gMin = 0.0, gMax = 0.0, gInterval = 0.0;
 Handle gTimer = null;
-ArrayList gSpawned = null;
 
 public Plugin myinfo =
 {
@@ -45,8 +44,6 @@ public void OnPluginStart()
     gMin      = cMin.FloatValue;
     gMax      = cMax.FloatValue;
     gInterval = cInterval.FloatValue;
-
-    gSpawned = new ArrayList();
 
     if(RRM_IsRegOpen())
         RegisterModifiers();
@@ -97,7 +94,6 @@ public int RRM_Callback_PowerupRain(bool enable, float value)
             KillTimer(gTimer);
             gTimer = null;
         }
-        ClearSpawned();
     }
     return gEnabled;
 }
@@ -111,33 +107,21 @@ void RestartTimer()
 
 public Action TimerTick(Handle timer)
 {
-    ClearSpawned();
+    int ent = -1;
+    while((ent = FindEntityByClassname(ent, "item_powerup_rune")) != -1)
+        AcceptEntityInput(ent, "Kill");
+
     for(int i = 1; i <= MaxClients; i++)
     {
         if(!IsClientInGame(i) || !IsPlayerAlive(i))
             continue;
         if(gChance > RandomFloat(0.0, 1.0))
-        {
-            int ent = SpawnPowerupAbove(i);
-            if(ent != -1)
-                gSpawned.Push(EntIndexToEntRef(ent));
-        }
+            SpawnPowerupAbove(i);
     }
     return Plugin_Continue;
 }
 
-void ClearSpawned()
-{
-    for(int i = gSpawned.Length - 1; i >= 0; i--)
-    {
-        int ent = EntRefToEntIndex(gSpawned.Get(i));
-        if(ent != -1 && IsValidEntity(ent))
-            AcceptEntityInput(ent, "Kill");
-    }
-    gSpawned.Clear();
-}
-
-int SpawnPowerupAbove(int client)
+void SpawnPowerupAbove(int client)
 {
     float origin[3];
     GetClientAbsOrigin(client, origin);
@@ -152,7 +136,7 @@ int SpawnPowerupAbove(int client)
 
     int ent = CreateEntityByName("item_powerup_rune");
     if(ent == -1)
-        return -1;
+        return;
 
     SetEntProp(ent, Prop_Send, "m_iTeamNum", 0);
     DispatchKeyValueInt(ent, "type", gRuneTypes[GetURandomInt() % sizeof(gRuneTypes)]);
@@ -160,8 +144,6 @@ int SpawnPowerupAbove(int client)
     DispatchSpawn(ent);
     TeleportEntity(ent, pos, NULL_VECTOR, NULL_VECTOR);
     ActivateEntity(ent);
-
-    return ent;
 }
 
 float RandomFloat(const float min = 0.0, const float max = 1.0){
