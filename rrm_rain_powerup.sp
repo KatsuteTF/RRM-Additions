@@ -109,7 +109,9 @@ public Action TimerTick(Handle timer)
 {
     int ent = -1;
     while((ent = FindEntityByClassname(ent, "item_powerup_rune")) != -1)
+    {
         AcceptEntityInput(ent, "Kill");
+    }
 
     for(int i = 1; i <= MaxClients; i++)
     {
