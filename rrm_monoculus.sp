@@ -32,7 +32,7 @@ public void OnPluginStart()
 {
     cMin      = CreateConVar("rrm_monoculus_min",      "0.01",  "Minimum value for the random number generator.");
     cMax      = CreateConVar("rrm_monoculus_max",      "0.2",  "Maximum value for the random number generator.");
-    cLimit    = CreateConVar("rrm_monoculus_limit",    "5",     "Maximum number of monoculi that can be alive at once.");
+    cLimit    = CreateConVar("rrm_monoculus_limit",    "5",     "Maximum number of monoculus that can be alive at once.");
 
     cMin.AddChangeHook(OnConvarChanged);
     cMax.AddChangeHook(OnConvarChanged);
