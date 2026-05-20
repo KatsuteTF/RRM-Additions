@@ -13,7 +13,9 @@
 
 #pragma newdecls required
 
-#define POWERUP_TYPE_COUNT 8
+// Rune types for item_powerup_rune matching those used in the other powerup plugins:
+// Strength=0, Haste=1, Resist=3, Vampire=4, Plague=5, Precision=6, Agility=7
+static const int gRuneTypes[] = {0, 1, 3, 4, 5, 6, 7};
 
 int gEnabled = 0;
 float gChance = 0.0;
@@ -49,6 +51,7 @@ public void OnPluginStart()
     if(RRM_IsRegOpen())
         RegisterModifiers();
 
+    AddCommandListener(OnDropItem, "dropitem");
     AutoExecConfig(true, "rrm_rain_powerup", "rrm");
 }
 
@@ -152,7 +155,7 @@ int SpawnPowerupAbove(int client)
         return -1;
 
     SetEntProp(ent, Prop_Send, "m_iTeamNum", 0);
-    DispatchKeyValueInt(ent, "type", GetURandomInt() % POWERUP_TYPE_COUNT);
+    DispatchKeyValueInt(ent, "type", gRuneTypes[GetURandomInt() % sizeof(gRuneTypes)]);
 
     DispatchSpawn(ent);
     TeleportEntity(ent, pos, NULL_VECTOR, NULL_VECTOR);
@@ -163,4 +166,10 @@ int SpawnPowerupAbove(int client)
 
 float RandomFloat(const float min = 0.0, const float max = 1.0){
     return min + GetURandomFloat() * (max - min);
+}
+
+public Action OnDropItem(const int client, const char[] cmd, const int args){
+    if(gEnabled)
+        return Plugin_Handled;
+    return Plugin_Continue;
 }
