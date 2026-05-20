@@ -128,6 +128,8 @@ public Action OnPlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
             continue;
         if(GetClientTeam(i) != team)
             continue;
+        if(IsInRespawnRoom(i))
+            continue;
 
         float pos[3];
         GetClientAbsOrigin(i, pos);
@@ -167,4 +169,25 @@ public Action OnPlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
     TeleportEntity(client, targetPos, NULL_VECTOR, NULL_VECTOR);
 
     return Plugin_Continue;
+}
+
+bool IsInRespawnRoom(int client)
+{
+    float pos[3];
+    GetClientAbsOrigin(client, pos);
+
+    int ent = -1;
+    while((ent = FindEntityByClassname(ent, "func_respawnroom")) != -1)
+    {
+        float origin[3], mins[3], maxs[3];
+        GetEntPropVector(ent, Prop_Send, "m_vecOrigin", origin);
+        GetEntPropVector(ent, Prop_Send, "m_vecMins", mins);
+        GetEntPropVector(ent, Prop_Send, "m_vecMaxs", maxs);
+
+        if(pos[0] >= origin[0] + mins[0] && pos[0] <= origin[0] + maxs[0] &&
+           pos[1] >= origin[1] + mins[1] && pos[1] <= origin[1] + maxs[1] &&
+           pos[2] >= origin[2] + mins[2] && pos[2] <= origin[2] + maxs[2])
+            return true;
+    }
+    return false;
 }
