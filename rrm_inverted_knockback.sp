@@ -2,7 +2,7 @@
 
 #pragma semicolon 1
 
-#define RRM_VERSION "1.0"
+#define RRM_VERSION "2.0"
 
 #include <sourcemod>
 #include <sdkhooks>
@@ -19,16 +19,16 @@ float gMin = 0.0, gMax = 0.0;
 
 public Plugin myinfo =
 {
-    name = "[RRM] Knockback Modifier",
+    name = "[RRM] Inverted Knockback Modifier",
     author = "Katsute",
-    description = "Modifier that scales knockback force.",
+    description = "Modifier that inverts and scales knockback force, pulling the victim toward the attacker.",
     version = "2.0"
 };
 
 public void OnPluginStart()
 {
-    cMin = CreateConVar("rrm_knockback_min", "0.0", "Minimum value for the random number generator.");
-    cMax = CreateConVar("rrm_knockback_max", "5.0", "Maximum value for the random number generator.");
+    cMin = CreateConVar("rrm_inverted_knockback_min", "-5.0", "Minimum value for the random number generator.");
+    cMax = CreateConVar("rrm_inverted_knockback_max", "0.0", "Maximum value for the random number generator.");
 
     cMin.AddChangeHook(OnConvarChanged);
     cMax.AddChangeHook(OnConvarChanged);
@@ -46,7 +46,7 @@ public void OnPluginStart()
     if(RRM_IsRegOpen())
         RegisterModifiers();
 
-    AutoExecConfig(true, "rrm_knockback", "rrm");
+    AutoExecConfig(true, "rrm_inverted_knockback", "rrm");
 }
 
 public int RRM_OnRegOpen()
@@ -56,7 +56,7 @@ public int RRM_OnRegOpen()
 
 void RegisterModifiers()
 {
-    RRM_Register("Knockback", gMin, gMax, false, RRM_Callback_Knockback);
+    RRM_Register("Inverted Knockback", gMin, gMax, false, RRM_Callback_InvertedKnockback);
 }
 
 public void OnConvarChanged(Handle convar, char[] oldValue, char[] newValue)
@@ -77,7 +77,7 @@ public void OnClientPostAdminCheck(int client)
     SDKHook(client, SDKHook_OnTakeDamageAlive, OnTakeDamage);
 }
 
-public int RRM_Callback_Knockback(bool enable, float value)
+public int RRM_Callback_InvertedKnockback(bool enable, float value)
 {
     gEnabled = enable;
     if(gEnabled)
