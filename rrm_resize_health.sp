@@ -23,7 +23,7 @@ public Plugin myinfo =
     name = "[RRM] Health Size Modifier",
     author = "Katsute",
     description = "Modifier that resizes players based on their health percentage.",
-    version = "1.0"
+    version = "2.0"
 };
 
 public void OnPluginStart()
