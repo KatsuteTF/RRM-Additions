@@ -13,6 +13,8 @@
 
 #pragma newdecls required
 
+#define POWERUP_TYPE_COUNT 8
+
 int gEnabled = 0;
 float gChance = 0.0;
 ConVar cMin = null, cMax = null, cInterval = null;
@@ -138,7 +140,7 @@ int SpawnPowerupAbove(int client)
     GetClientAbsOrigin(client, origin);
 
     float radius = 150.0;
-    float angle  = GetURandomFloat() * 6.283185;
+    float angle  = GetURandomFloat() * (FLOAT_PI * 2.0);
 
     float pos[3];
     pos[0] = origin[0] + Cosine(angle) * radius;
@@ -150,7 +152,7 @@ int SpawnPowerupAbove(int client)
         return -1;
 
     SetEntProp(ent, Prop_Send, "m_iTeamNum", 0);
-    DispatchKeyValueInt(ent, "type", GetURandomInt() % 8);
+    DispatchKeyValueInt(ent, "type", GetURandomInt() % POWERUP_TYPE_COUNT);
 
     DispatchSpawn(ent);
     TeleportEntity(ent, pos, NULL_VECTOR, NULL_VECTOR);
