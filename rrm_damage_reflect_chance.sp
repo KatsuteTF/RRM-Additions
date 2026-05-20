@@ -23,7 +23,7 @@ public Plugin myinfo =
     name = "[RRM] Damage Reflect Chance Modifier",
     author = "Katsute",
     description = "Modifier that grants a chance to fully reflect damage back to the attacker.",
-    version = "1.0"
+    version = "2.0"
 };
 
 public void OnPluginStart()

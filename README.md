@@ -8,7 +8,7 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 |`rrm_damage_reflect_chance_max`|`1.0`|Max damage reflect chance|
 |`rrm_damage_reflect_min`|`0.1`|Min damage reflect percentage|
 |`rrm_damage_reflect_max`|`1.0`|Max damage reflect percentage|
-|`rrm_knockback_min`|`0.0`|Min knockback multiplier|
+|`rrm_knockback_min`|`-5.0`|Min knockback multiplier|
 |`rrm_knockback_max`|`5.0`|Max knockback multiplier|
 |`rrm_attribute_clip_min`|`0.5`|Min clip size|
 |`rrm_attribute_clip_max`|`4.0`|Max clip size|

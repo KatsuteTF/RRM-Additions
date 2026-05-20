@@ -23,7 +23,7 @@ public Plugin myinfo =
     name = "[RRM] Damage Reflect Modifier",
     author = "Katsute",
     description = "Modifier that reflects a percentage of damage back to the attacker.",
-    version = "1.0"
+    version = "2.0"
 };
 
 public void OnPluginStart()
