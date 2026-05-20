@@ -31,7 +31,7 @@ public Plugin myinfo =
 public void OnPluginStart()
 {
     cMin = CreateConVar("rrm_buildings_min", "0.1", "Minimum value for the random number generator.");
-    cMax = CreateConVar("rrm_buildings_max", "1.0", "Maximum value for the random number generator.");
+    cMax = CreateConVar("rrm_buildings_max", "0.5", "Maximum value for the random number generator.");
 
     cMin.AddChangeHook(OnConvarChanged);
     cMax.AddChangeHook(OnConvarChanged);
@@ -127,6 +127,24 @@ public void OnPlayerDeath(const Handle event, const char[] name, const bool dont
     RemovePlayerBuilding(client);
 }
 
+public Action Building_OnTakeDamage(int victim, int &attacker, int &inflictor, float &damage, int &damagetype)
+{
+    if(!(1 <= attacker <= MaxClients) || !IsClientInGame(attacker))
+        return Plugin_Continue;
+
+    for(int i = 1; i <= MaxClients; i++)
+    {
+        if(EntRefToEntIndex(gBuilding[i]) == victim)
+        {
+            if(IsClientInGame(i) && GetClientTeam(attacker) == GetClientTeam(i))
+                return Plugin_Handled;
+            break;
+        }
+    }
+
+    return Plugin_Continue;
+}
+
 void GetBuildingModel(bool isSentry, int level, char[] modelPath, int maxlen)
 {
     if(isSentry)
@@ -156,6 +174,13 @@ void AttachBuilding(int client)
     int level    = GetRandomInt(1, 3);
     bool isSentry = GetRandomInt(0, 1) == 0;
 
+    float origin[3];
+    GetClientAbsOrigin(client, origin);
+    float angles[3];
+    GetClientAbsAngles(client, angles);
+    angles[0] = 0.0;
+    angles[2] = 0.0;
+
     int building = CreateEntityByName(isSentry ? "obj_sentrygun" : "obj_dispenser");
     if(building == -1)
         return;
@@ -165,22 +190,26 @@ void AttachBuilding(int client)
     SetEntProp(building, Prop_Send, "m_iUpgradeLevel", level);
     SetEntProp(building, Prop_Send, "m_iHighestUpgradeLevel", level);
 
-    float origin[3];
-    GetClientAbsOrigin(client, origin);
-    float angles[3];
-    GetClientAbsAngles(client, angles);
-    angles[0] = 0.0;
-    angles[2] = 0.0;
-
     DispatchSpawn(building);
     TeleportEntity(building, origin, angles, NULL_VECTOR);
     ActivateEntity(building);
 
+    // Prevent players from getting stuck inside the building
+    SetEntProp(building, Prop_Data, "m_CollisionGroup", 2); // COLLISION_GROUP_DEBRIS
+
+    // Hide the building entity's own model; the prop_dynamic below handles the visual
+    SetEntProp(building, Prop_Send, "m_fEffects", GetEntProp(building, Prop_Send, "m_fEffects") | 32); // EF_NODRAW
+
+    // Parent building to player so it follows them
     SetVariantString("!activator");
     AcceptEntityInput(building, "SetParent", client, building);
 
+    // Block damage from the builder's own team
+    SDKHook(building, SDKHook_OnTakeDamage, Building_OnTakeDamage);
+
     gBuilding[client] = EntIndexToEntRef(building);
 
+    // Create visible model using EF_BONEMERGE so it renders correctly on the player
     char modelPath[PLATFORM_MAX_PATH];
     GetBuildingModel(isSentry, level, modelPath, sizeof(modelPath));
 
@@ -191,13 +220,15 @@ void AttachBuilding(int client)
     DispatchKeyValue(model, "model", modelPath);
     DispatchKeyValue(model, "solid", "0");
     DispatchKeyValue(model, "disableshadows", "1");
-
     DispatchSpawn(model);
-    TeleportEntity(model, origin, angles, NULL_VECTOR);
     ActivateEntity(model);
 
+    // Parent to player
     SetVariantString("!activator");
     AcceptEntityInput(model, "SetParent", client, model);
+
+    // EF_BONEMERGE renders the prop at the parent's root bone (player's feet) without needing TeleportEntity
+    SetEntProp(model, Prop_Send, "m_fEffects", GetEntProp(model, Prop_Send, "m_fEffects") | 1); // EF_BONEMERGE
 
     gModel[client] = EntIndexToEntRef(model);
 }
