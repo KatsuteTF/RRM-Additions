@@ -15,9 +15,9 @@
 
 int gEnabled = 0;
 float gChance = 0.0;
-ConVar cMin = null, cMax = null, cHealth = null;
+ConVar cMin = null, cMax = null, cHealth = null, cLimit = null;
 float gMin = 0.0, gMax = 0.0;
-int gHealth = 0;
+int gHealth = 0, gLimit = 5;
 ArrayList gSpawned = null;
 
 public Plugin myinfo =
@@ -33,14 +33,17 @@ public void OnPluginStart()
     cMin    = CreateConVar("rrm_headless_horsemann_min",    "0.05",  "Minimum value for the random number generator.");
     cMax    = CreateConVar("rrm_headless_horsemann_max",    "0.2",  "Maximum value for the random number generator.");
     cHealth = CreateConVar("rrm_headless_horsemann_health", "400", "Health for the horsemann.");
+    cLimit  = CreateConVar("rrm_headless_horsemann_limit",  "5",   "Maximum number of headless horsemanns that can be alive at once.");
 
     cMin.AddChangeHook(OnConvarChanged);
     cMax.AddChangeHook(OnConvarChanged);
     cHealth.AddChangeHook(OnConvarChanged);
+    cLimit.AddChangeHook(OnConvarChanged);
 
     gMin    = cMin.FloatValue;
     gMax    = cMax.FloatValue;
     gHealth = cHealth.IntValue;
+    gLimit  = cLimit.IntValue;
 
     gSpawned = new ArrayList();
 
@@ -75,6 +78,8 @@ public void OnConvarChanged(Handle convar, char[] oldValue, char[] newValue)
         gMax = fNewValue;
     else if(convar == cHealth)
         gHealth = RoundToNearest(fNewValue);
+    else if(convar == cLimit)
+        gLimit = RoundToNearest(fNewValue);
 }
 
 public int RRM_Callback_Horseman(bool enable, float value)
@@ -119,6 +124,17 @@ public void OnPlayerDeath(const Handle event, const char[] name, const bool dont
 
     if(gChance > RandomFloat(0.0, 1.0))
     {
+        // Remove dead entities from tracking
+        for(int i = gSpawned.Length - 1; i >= 0; i--)
+        {
+            int tracked = EntRefToEntIndex(gSpawned.Get(i));
+            if(tracked == INVALID_ENT_REFERENCE || !IsValidEntity(tracked))
+                gSpawned.Remove(i);
+        }
+
+        if(gLimit > 0 && gSpawned.Length >= gLimit)
+            return;
+
         int ent = CreateEntityByName("headless_hatman");
         if(ent == -1)
             return;

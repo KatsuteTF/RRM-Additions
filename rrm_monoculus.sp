@@ -15,8 +15,10 @@
 
 int gEnabled = 0;
 float gChance = 0.0;
-ConVar cMin = null, cMax = null;
+ConVar cMin = null, cMax = null, cLimit = null;
 float gMin = 0.0, gMax = 0.0;
+int gLimit = 5;
+ArrayList gSpawned = null;
 
 public Plugin myinfo =
 {
@@ -30,12 +32,17 @@ public void OnPluginStart()
 {
     cMin      = CreateConVar("rrm_monoculus_min",      "0.01",  "Minimum value for the random number generator.");
     cMax      = CreateConVar("rrm_monoculus_max",      "0.2",  "Maximum value for the random number generator.");
+    cLimit    = CreateConVar("rrm_monoculus_limit",    "5",     "Maximum number of monoculi that can be alive at once.");
 
     cMin.AddChangeHook(OnConvarChanged);
     cMax.AddChangeHook(OnConvarChanged);
+    cLimit.AddChangeHook(OnConvarChanged);
 
     gMin      = cMin.FloatValue;
     gMax      = cMax.FloatValue;
+    gLimit    = cLimit.IntValue;
+
+    gSpawned = new ArrayList();
 
     if(RRM_IsRegOpen())
         RegisterModifiers();
@@ -66,6 +73,8 @@ public void OnConvarChanged(Handle convar, char[] oldValue, char[] newValue)
         gMin = fNewValue;
     else if(convar == cMax)
         gMax = fNewValue;
+    else if(convar == cLimit)
+        gLimit = RoundToNearest(fNewValue);
 }
 
 public int RRM_Callback_Monoculus(bool enable, float value)
@@ -73,6 +82,16 @@ public int RRM_Callback_Monoculus(bool enable, float value)
     gEnabled = enable;
     if(gEnabled)
         gChance = value;
+    else
+    {
+        for(int i = gSpawned.Length - 1; i >= 0; i--)
+        {
+            int ent = EntRefToEntIndex(gSpawned.Get(i));
+            if(ent != INVALID_ENT_REFERENCE && IsValidEntity(ent))
+                AcceptEntityInput(ent, "Kill");
+        }
+        gSpawned.Clear();
+    }
     return gEnabled;
 }
 
@@ -97,6 +116,17 @@ public void OnPlayerDeath(const Handle event, const char[] name, const bool dont
 
     if(gChance > RandomFloat(0.0, 1.0))
     {
+        // Remove dead entities from tracking
+        for(int i = gSpawned.Length - 1; i >= 0; i--)
+        {
+            int tracked = EntRefToEntIndex(gSpawned.Get(i));
+            if(tracked == INVALID_ENT_REFERENCE || !IsValidEntity(tracked))
+                gSpawned.Remove(i);
+        }
+
+        if(gLimit > 0 && gSpawned.Length >= gLimit)
+            return;
+
         int ent = CreateEntityByName("eyeball_boss");
         if(ent == -1)
             return;
@@ -106,6 +136,8 @@ public void OnPlayerDeath(const Handle event, const char[] name, const bool dont
         DispatchSpawn(ent);
         TeleportEntity(ent, origin, angles, NULL_VECTOR);
         ActivateEntity(ent);
+
+        gSpawned.Push(EntIndexToEntRef(ent));
     }
 }
 
