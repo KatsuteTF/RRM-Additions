@@ -142,7 +142,6 @@ public Action OnPlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
     if(candidateCount == 0)
         return Plugin_Continue;
 
-    // Sort descending by distance (furthest first)
     for(int i = 0; i < candidateCount - 1; i++)
     {
         for(int j = 0; j < candidateCount - i - 1; j++)
@@ -160,7 +159,6 @@ public Action OnPlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
         }
     }
 
-    // Pick randomly from top min(gCount, candidateCount) furthest players
     int pool = (gCount < candidateCount) ? gCount : candidateCount;
     int chosen = candidates[GetURandomInt() % pool];
 

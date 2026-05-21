@@ -74,6 +74,12 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 |`rrm_size_max`|`1.35`|Max size|
 |`rrm_size_random_min`|`0.25`|Min size|
 |`rrm_size_random_max`|`1.35`|Max size|
+|`rrm_size_grow_kill_min`|`0.25`|Min (starting) size|
+|`rrm_size_grow_kill_max`|`1.35`|Max size|
+|`rrm_size_grow_kill_amount`|`0.1`|Amount to shrink|
+|`rrm_size_shrink_kill_min`|`0.25`|Min size|
+|`rrm_size_shrink_kill_max`|`1.0`|Max (starting) size|
+|`rrm_size_shrink_kill_amount`|`0.1`|Amount to shrink|
 |`rrm_stun_min`|`0.1`|Min stun chance|
 |`rrm_stun_max`|`1.0`|Max stun chance|
 |`rrm_stun_duration`|`3.0`|Stun duration|
