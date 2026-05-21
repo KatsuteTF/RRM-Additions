@@ -31,8 +31,8 @@ public Plugin myinfo =
 public void OnPluginStart()
 {
     cMin    = CreateConVar("rrm_headless_horsemann_min",    "0.05",  "Minimum value for the random number generator.");
-    cMax    = CreateConVar("rrm_headless_horsemann_max",    "0.2",  "Maximum value for the random number generator.");
-    cHealth = CreateConVar("rrm_headless_horsemann_health", "400", "Health for the horsemann.");
+    cMax    = CreateConVar("rrm_headless_horsemann_max",    "0.1",  "Maximum value for the random number generator.");
+    cHealth = CreateConVar("rrm_headless_horsemann_health", "1000", "Health for the horsemann.");
 
     cMin.AddChangeHook(OnConvarChanged);
     cMax.AddChangeHook(OnConvarChanged);
