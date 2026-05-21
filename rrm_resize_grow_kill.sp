@@ -46,7 +46,7 @@ public void OnPluginStart()
     if(RRM_IsRegOpen())
         RegisterModifiers();
 
-    AutoExecConfig(true, "rrm_resize_grow_kill", "rrm");
+    AutoExecConfig(true, "rrm_size_grow_kill", "rrm");
 }
 
 public void OnPluginEnd()
