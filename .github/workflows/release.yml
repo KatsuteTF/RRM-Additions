@@ -5,11 +5,11 @@ on:
 
 jobs:
   release:
-    name: Release Plugin
+    name: Release
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v6
 
       - name: Install SourceMod
         uses: KatsuteTF/Workflows/actions/setup-sourcepawn@main
@@ -26,14 +26,17 @@ jobs:
           url: https://raw.githubusercontent.com/KatsuteTF/RRM/main/addons/sourcemod/include/rrm.inc
           file: rrm.inc
 
-      - name: Compile Plugins
+      - name: Compile
         run: |-
           for file in *.sp; do
               spcomp -i ./ "$file"
           done
 
+      - name: Package
+        run: zip plugins.zip *.smx
+
       - name: Deploy to GitHub Releases
-        uses: AButler/upload-release-assets@v2.0.2
+        uses: AButler/upload-release-assets@v4.0.0
         with:
-          files: "*.smx"
+          files: "plugins.zip"
           repo-token: ${{ secrets.GITHUB_TOKEN }}

@@ -1,16 +1,18 @@
-name: SourcePawn CI
+name: CI
 on: [push]
 
 jobs:
   ci:
-    name: SourcePawn CI
+    name: CI
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install SourceMod
         uses: KatsuteTF/Workflows/actions/setup-sourcepawn@main
+        with:
+          sourcemod-version: "1.12.x"
 
       - name: Install TF2Attributes
         uses: KatsuteTF/Workflows/actions/curl@main
@@ -24,8 +26,25 @@ jobs:
           url: https://raw.githubusercontent.com/KatsuteTF/RRM/main/addons/sourcemod/include/rrm.inc
           file: rrm.inc
 
-      - name: Compile Plugins
+      - name: Compile
         run: |-
+          failed=0
+
           for file in *.sp; do
-              spcomp -i ./ "$file"
+              echo "Compiling $file"
+              spcomp -i ./ "$file" || failed=$((failed + 1))
+              echo ""
+              echo ""
           done
+
+          if [ "$failed" -gt 0 ]; then
+              echo "##[error]$failed plugin(s) failed to compile"
+              exit 1
+          fi
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: plugins
+          path: "*.smx"
+          retention-days: 1

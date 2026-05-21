@@ -1,4 +1,4 @@
-// Copyright (C) 2024 Katsute | Licensed under CC BY-NC-SA 4.0
+// Copyright (C) 2026 Katsute | Licensed under CC BY-NC-SA 4.0
 
 #pragma semicolon 1
 
@@ -19,7 +19,7 @@ ConVar cDur = null, cDelay = null;
 float gDelay = 0.0;
 
 public Plugin myinfo = {
-    name = "[RRM] critter Modifier",
+    name = "[RRM] Crit Modifier",
     author = "Katsute",
     description = "Modifier that forces crit on kill.",
     version = "1.0"
