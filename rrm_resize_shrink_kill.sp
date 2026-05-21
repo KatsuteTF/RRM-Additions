@@ -23,7 +23,7 @@ public Plugin myinfo =
     name = "[RRM] Shrink on Kill Modifier",
     author = "Katsute",
     description = "Modifier that shrinks players each time they get a kill.",
-    version = "1.0"
+    version = "2.0"
 };
 
 public void OnPluginStart()
