@@ -21,7 +21,7 @@ public Plugin myinfo =
     name = "[RRM] Medieval Crits Modifier",
     author = "Katsute",
     description = "Modifier that sets game to medieval with 100% crit chance.",
-    version = "1.0"
+    version = "2.0"
 };
 
 public void OnPluginStart()

@@ -23,7 +23,7 @@ public Plugin myinfo =
     name = "[RRM] Respawn Teleport Modifier",
     author = "Katsute",
     description = "Modifier that teleports players to a random furthest alive teammate from spawn on respawn.",
-    version = "1.0"
+    version = "2.0"
 };
 
 public void OnPluginStart()
