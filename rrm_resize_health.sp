@@ -141,13 +141,11 @@ void SetPlayerSize(int client)
 
     float currentSize = GetEntPropFloat(client, Prop_Send, "m_flModelScale");
 
-    // When growing, verify the larger hull fits before applying
     if(newSize > currentSize)
     {
         float origin[3];
         GetClientAbsOrigin(client, origin);
 
-        // TF2 standing hull scaled to new size; Z min is always 0 (hull anchored at feet)
         float mins[3], maxs[3];
         mins[0] = -24.0 * newSize;
         mins[1] = -24.0 * newSize;
@@ -160,8 +158,6 @@ void SetPlayerSize(int client)
 
         if(TR_DidHit())
         {
-            // Try lifting the player by the extra height so ground-level
-            // geometry (slopes, steps) no longer blocks the wider hull
             float liftedOrigin[3];
             liftedOrigin[0] = origin[0];
             liftedOrigin[1] = origin[1];
@@ -174,7 +170,6 @@ void SetPlayerSize(int client)
                 TeleportEntity(client, liftedOrigin, NULL_VECTOR, NULL_VECTOR);
                 SetEntPropFloat(client, Prop_Send, "m_flModelScale", newSize);
             }
-            // Still blocked (e.g. ceiling) — skip resize this tick
             return;
         }
     }
