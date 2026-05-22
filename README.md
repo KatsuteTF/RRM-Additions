@@ -4,10 +4,6 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 
 |cvar|param|description|
 |---|:-:|---|
-|`rrm_knockback_min`|`0.0`|Min knockback multiplier|
-|`rrm_knockback_max`|`5.0`|Max knockback multiplier|
-|`rrm_inverted_knockback_min`|`-5.0`|Min inverted knockback multiplier|
-|`rrm_inverted_knockback_max`|`0.0`|Max inverted knockback multiplier|
 |`rrm_attribute_clip_min`|`0.5`|Min clip size|
 |`rrm_attribute_clip_max`|`4.0`|Max clip size|
 |`rrm_attribute_clip_delay`|`1.2`|Attribute delay|
