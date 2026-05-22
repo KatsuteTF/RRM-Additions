@@ -27,8 +27,8 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
-    cMin = CreateConVar("rrm_inverted_knockback_min", "-5.0", "Minimum value for the random number generator.");
-    cMax = CreateConVar("rrm_inverted_knockback_max", "0.0", "Maximum value for the random number generator.");
+    cMin = CreateConVar("rrm_knockback_inverted_min", "1.0", "Minimum value for the random number generator.");
+    cMax = CreateConVar("rrm_knockback_inverted_max", "4.0", "Maximum value for the random number generator.");
 
     cMin.AddChangeHook(OnConvarChanged);
     cMax.AddChangeHook(OnConvarChanged);
@@ -46,7 +46,7 @@ public void OnPluginStart()
     if(RRM_IsRegOpen())
         RegisterModifiers();
 
-    AutoExecConfig(true, "rrm_inverted_knockback", "rrm");
+    AutoExecConfig(true, "rrm_knockback_inverted", "rrm");
 }
 
 public int RRM_OnRegOpen()
@@ -94,8 +94,8 @@ public Action OnTakeDamage(int victim, int &attacker, int &inflictor, float &dam
     if(!(1 <= victim <= MaxClients) || !IsClientInGame(victim) || !IsPlayerAlive(victim))
         return Plugin_Continue;
 
-    damageForce[0] *= gMul;
-    damageForce[1] *= gMul;
-    damageForce[2] *= gMul;
+    damageForce[0] *= gMul * -1;
+    damageForce[1] *= gMul * -1;
+    damageForce[2] *= gMul * -1;
     return Plugin_Changed;
 }
