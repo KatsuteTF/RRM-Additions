@@ -4,10 +4,6 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 
 |cvar|param|description|
 |---|:-:|---|
-|`rrm_damage_reflect_chance_min`|`0.1`|Min damage reflect chance|
-|`rrm_damage_reflect_chance_max`|`1.0`|Max damage reflect chance|
-|`rrm_damage_reflect_min`|`0.1`|Min damage reflect percentage|
-|`rrm_damage_reflect_max`|`1.0`|Max damage reflect percentage|
 |`rrm_knockback_min`|`0.0`|Min knockback multiplier|
 |`rrm_knockback_max`|`5.0`|Max knockback multiplier|
 |`rrm_inverted_knockback_min`|`-5.0`|Min inverted knockback multiplier|
@@ -33,6 +29,10 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 |`rrm_charge_max`|`1.0`|Max charge chance|
 |`rrm_charge_duration`|`3.0`|Charge duration|
 |`rrm_crit_pickup_duration`|`5.0`|Crit duration|
+|`rrm_damage_reflect_min`|`0.1`|Min damage reflect|
+|`rrm_damage_reflect_max`|`0.5`|Max damage reflect|
+|`rrm_damage_reflect_chance_min`|`0.1`|Min damage reflect chance|
+|`rrm_damage_reflect_chance_max`|`0.5`|Max damage reflect chance|
 |`rrm_explode_min`|`0.1`|Min explode chance|
 |`rrm_explode_max`|`1.0`|Max explode chance|
 |`rrm_explosive_shot_min`|`0.1`|Min explosive shot chance|
