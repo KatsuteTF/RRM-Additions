@@ -29,7 +29,7 @@ public Plugin myinfo =
 public void OnPluginStart()
 {
     cMin    = CreateConVar("rrm_size_grow_kill_min",    "0.25",  "Minimum size (starting size) for players.");
-    cMax    = CreateConVar("rrm_size_grow_kill_max",    "1.35", "Maximum size a player can grow to.");
+    cMax    = CreateConVar("rrm_size_grow_kill_max",    "1.3", "Maximum size a player can grow to.");
     cAmount = CreateConVar("rrm_size_grow_kill_amount", "0.1",  "Amount to grow per kill.");
 
     cMin.AddChangeHook(OnConvarChanged);

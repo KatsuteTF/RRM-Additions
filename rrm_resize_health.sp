@@ -29,7 +29,7 @@ public Plugin myinfo =
 public void OnPluginStart()
 {
     cMin = CreateConVar("rrm_size_health_min", "0.25", "Minimum size when at 0% health.");
-    cMax = CreateConVar("rrm_size_health_max", "1.35", "Maximum size when overhealed.");
+    cMax = CreateConVar("rrm_size_health_max", "1.3", "Maximum size when overhealed.");
 
     cMin.AddChangeHook(OnConvarChanged);
     cMax.AddChangeHook(OnConvarChanged);

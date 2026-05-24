@@ -28,7 +28,7 @@ public Plugin myinfo =
 public void OnPluginStart()
 {
     cMin = CreateConVar("rrm_size_random_min", "0.25", "Minimum value for the random number generator.");
-    cMax = CreateConVar("rrm_size_random_max", "1.35",  "Maximum value for the random number generator.");
+    cMax = CreateConVar("rrm_size_random_max", "1.3",  "Maximum value for the random number generator.");
 
     cMin.AddChangeHook(OnConvarChanged);
     cMax.AddChangeHook(OnConvarChanged);

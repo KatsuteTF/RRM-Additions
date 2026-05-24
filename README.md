@@ -67,19 +67,21 @@ Additional modifiers for the [RRM](https://forums.alliedmods.net/showthread.php?
 |`rrm_sentry_min`|`0.1`|Min sentry chance|
 |`rrm_sentry_max`|`1.0`|Max sentry chance|
 |`rrm_sentry_duration`|`30.0`|Sentry duration|
-|`rrm_shoot_bats_min`|`0.05`|Min bat shot chance|
-|`rrm_shoot_bats_max`|`0.2`|Max bat shot chance|
-|`rrm_shoot_fireball_min`|`0.05`|Min fireball shot chance|
-|`rrm_shoot_fireball_max`|`0.2`|Max fireball shot chance|
-|`rrm_shoot_grenade_min`|`0.05`|Min grenade shot chance|
-|`rrm_shoot_grenade_max`|`0.2`|Max grenade shot chance|
+|`rrm_shoot_bats_min`|`0.01`|Min bat shot chance|
+|`rrm_shoot_bats_max`|`0.1`|Max bat shot chance|
+|`rrm_shoot_fireball_min`|`0.01`|Min fireball shot chance|
+|`rrm_shoot_fireball_max`|`0.1`|Max fireball shot chance|
+|`rrm_shoot_grenade_min`|`0.01`|Min grenade shot chance|
+|`rrm_shoot_grenade_max`|`0.1`|Max grenade shot chance|
 |`rrm_skeleton_duration`|`30.0`|Skeleton duration|
 |`rrm_size_min`|`0.25`|Min size|
-|`rrm_size_max`|`1.35`|Max size|
+|`rrm_size_max`|`1.3`|Max size|
+|`rrm_size_health_min`|`0.25`|Min size when 0 health|
+|`rrm_size_health_max`|`1.3`|Max size when overhealed|
 |`rrm_size_random_min`|`0.25`|Min size|
-|`rrm_size_random_max`|`1.35`|Max size|
-|`rrm_size_grow_kill_min`|`0.25`|Min (starting) size|
-|`rrm_size_grow_kill_max`|`1.35`|Max size|
+|`rrm_size_random_max`|`1.3`|Max size|
+|`rrm_size_grow_kill_min`|`0.25`|Max size|
+|`rrm_size_grow_kill_max`|`1.3`|Max size|
 |`rrm_size_grow_kill_amount`|`0.1`|Amount to shrink|
 |`rrm_size_shrink_kill_min`|`0.25`|Min size|
 |`rrm_size_shrink_kill_max`|`1.0`|Max (starting) size|
