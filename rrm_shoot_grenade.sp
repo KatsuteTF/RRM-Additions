@@ -84,7 +84,12 @@ public Action TF2_CalcIsAttackCritical(int client, int weapon, char[] weaponname
     if (!(1 <= client <= MaxClients) || !IsClientInGame(client) || !IsPlayerAlive(client))
         return Plugin_Continue;
 
-    if (gChance > RandomFloat(0.0, 1.0))
+    float chance = gChance;
+    TFClassType class = TF2_GetPlayerClass(client);
+    if ((class == TFClass_Heavy || class == TFClass_Pyro) && weapon == GetPlayerWeaponSlot(client, 0))
+        chance *= 0.25;
+
+    if (chance > RandomFloat(0.0, 1.0))
         SpawnGrenade(client);
 
     return Plugin_Continue;
