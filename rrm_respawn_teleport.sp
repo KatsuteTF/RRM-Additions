@@ -162,9 +162,10 @@ public Action OnPlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
     int pool = (gCount < candidateCount) ? gCount : candidateCount;
     int chosen = candidates[GetURandomInt() % pool];
 
-    float targetPos[3];
+    float targetPos[3], targetAng[3];
     GetClientAbsOrigin(chosen, targetPos);
-    TeleportEntity(client, targetPos, NULL_VECTOR, NULL_VECTOR);
+    GetClientEyeAngles(chosen, targetAng);
+    TeleportEntity(client, targetPos, targetAng, NULL_VECTOR);
 
     return Plugin_Continue;
 }
