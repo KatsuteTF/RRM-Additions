@@ -93,6 +93,7 @@ public void OnPlayerDeath(const Handle event, const char[] name, const bool dont
 
     float origin[3];
     GetClientAbsOrigin(client, origin);
+    origin[2] += 175;
     float angles[3] = {0.0, 0.0, 0.0};
 
     if(gChance > RandomFloat(0.0, 1.0))
