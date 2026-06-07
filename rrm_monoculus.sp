@@ -102,7 +102,7 @@ public void OnPlayerDeath(const Handle event, const char[] name, const bool dont
         if(ent == -1)
             return;
 
-        SetEntProp(ent, Prop_Send, "m_iTeamNum", GetClientTeam(attacker));
+        SetEntProp(ent, Prop_Send, "m_iTeamNum", GetClientTeam(client));
 
         DispatchSpawn(ent);
         TeleportEntity(ent, origin, angles, NULL_VECTOR);
